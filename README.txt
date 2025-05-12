@@ -1,0 +1,1 @@
+Install xampp, start mysql and apache then click admin on mysql make a new database called toko_online then import the module within this file to open the tables. 
