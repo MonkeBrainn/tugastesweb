@@ -104,173 +104,108 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Metadata -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Toko Online</title>
-    <!-- CSS eksternal -->
+    <title>ReLuxe - Where fashion finds a second life</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* CSS untuk halaman login dengan carousel */
-        body {
+        /* Reset and base styles */
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            display: flex;
-            height: 100vh;
+            box-sizing: border-box;
         }
 
-        .page-container {
-            display: flex;
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            background-color: #f8f5f2;
+            position: relative;
+        }
+
+        /* Full-screen image container */
+        .fullscreen-container {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
-        }
-
-        /* Login panel styling */
-        .login-panel {
-            width: 40%;
-            min-width: 350px;
-            padding: 40px;
-            background-color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            z-index: 2;
-        }
-
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .login-header {
-            position: relative;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .login-header::after {
-            content: "";
-            display: block;
-            width: 50px;
-            height: 3px;
-            background-color: #8a2be2;
-            margin: 10px auto 0;
-        }
-
-        .error-message {
-            background-color: #ffebee;
-            color: #c62828;
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus {
-            border-color: #8a2be2;
-            outline: none;
-        }
-
-        .btn {
-            width: 100%;
-            background-color: #8a2be2;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #7b1fa2;
-        }
-
-        .link {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .link a {
-            color: #8a2be2;
-            text-decoration: none;
-        }
-
-        .link a:hover {
-            text-decoration: underline;
         }
 
         /* Carousel styling */
-        .carousel-container {
-            width: 60%;
-            position: relative;
-            background: linear-gradient(135deg, #333, #111);
-            overflow: hidden;
-        }
-
         .carousel {
-            display: flex;
             height: 100%;
-            transition: transform 0.5s ease;
+            width: 100%;
+            position: relative;
         }
 
         .carousel-slide {
-            min-width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            color: white;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
             background-size: cover;
             background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
         }
 
         .slide-content {
+            width: 100%;
             text-align: center;
-            max-width: 80%;
+            color: white;
+            z-index: 2;
         }
 
         .slide-content h2 {
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 20px;
+            font-size: 3.5rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .slide-content p {
             font-size: 1.2rem;
-            margin-bottom: 30px;
+            max-width: 80%;
+            margin: 0 auto;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
 
-        /* Navigation arrows */
+        /* Navigation controls */
+        .carousel-controls {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+
         .carousel-arrow {
             position: absolute;
             top: 50%;
@@ -314,125 +249,243 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             transform: rotate(135deg);
         }
 
-        /* Carousel indicators */
-        .carousel-indicators {
+        /* Login panel */
+        .login-container {
             position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 40px;
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.5s ease-out;
         }
 
-        .indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.5);
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .login-form {
+            width: 100%;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .login-header::after {
+            content: "";
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: #c5a47e;
+            margin: 10px auto 0;
+        }
+
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #c5a47e;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(197, 164, 126, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            background-color: #c5a47e;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .indicator.active {
-            background-color: white;
+        .btn:hover {
+            background-color: #b2916a;
+            transform: translateY(-2px);
         }
 
-        /* Responsive design */
+        .link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.9rem;
+        }
+
+        .link a {
+            color: #c5a47e;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Logo */
+        .brand-logo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            z-index: 5;
+        }
+
+        .brand-logo h1 {
+            color: white;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive styles */
         @media (max-width: 768px) {
-            .page-container {
-                flex-direction: column;
-            }
-            
-            .login-panel,
-            .carousel-container {
+            .login-container {
                 width: 100%;
-            }
-            
-            .login-panel {
-                height: auto;
+                right: 0;
                 padding: 30px 20px;
             }
-            
-            .carousel-container {
-                height: 300px;
+
+            .brand-logo {
+                top: 20px;
+                left: 20px;
+            }
+
+            .brand-logo h1 {
+                font-size: 1.8rem;
+            }
+
+            .slide-content h2 {
+                font-size: 2.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="page-container">
-        <!-- Login Panel -->
-        <div class="login-panel">
-            <div class="login-container">
-                <!-- Judul -->
-                <div class="login-header">
-                    <h2>Login</h2>
+    <!-- Full-screen background image and carousel -->
+    <div class="fullscreen-container">
+        <!-- Brand Logo -->
+        <div class="brand-logo">
+            <h1>ReLuxe</h1>
+        </div>
+
+        <!-- Carousel -->
+        <div class="carousel">
+            <div class="carousel-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/slide1.png');">
+                <div class="slide-content">
+                    <h2>Premium Quality</h2>
+                    <p>Luxury Second Hand Products</p>
                 </div>
-
-                <!-- Tampilkan pesan kesalahan -->
-                <?php if ($error): ?>
-                    <div class="error-message"><?= htmlspecialchars($error); ?></div>
-                <?php endif; ?>
-
-                <!-- Form login -->
-                <form method="POST" action="">
-                    <!-- Input nama pengguna -->
-                    <div class="form-group">
-                        <label for="nama_user">Nama User:</label>
-                        <input type="text" id="nama_user" name="nama_user" placeholder="Masukkan nama pengguna" required>
-                    </div>
-                    <!-- Input password -->
-                    <div class="form-group">
-                        <label for="password_user">Password:</label>
-                        <input type="password" id="password_user" name="password_user" placeholder="Masukkan password" required>
-                    </div>
-                    <!-- Tombol submit -->
-                    <button type="submit" class="btn">LOGIN</button>
-                </form>
-
-                <!-- Tautan registrasi -->
-                <div class="link">
-                    <p>Belum punya akun? <a href="register.php"><b>Daftar di sini</b></a></p>
+            </div>
+            <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/slide2.png');">
+                <div class="slide-content">
+                    <h2>No Selling Fees</h2>
+                    <p>Earn even more on your first 3 listings</p>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/slide3.png');">
+                <div class="slide-content">
+                    <h2>Pengiriman Cepat</h2>
+                    <p>Nikmati layanan pengiriman ekspres ke seluruh Indonesia</p>
                 </div>
             </div>
         </div>
 
-        <!-- Image Carousel -->
-        <div class="carousel-container">
-            <div class="carousel">
-                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/slide1.png');">
-                    <div class="slide-content">
-                        <h2>ReLuxe</h2>
-                        <p></p>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/slide2.png');">
-                    <div class="slide-content">
-                        <h2>No Selling Fees</h2>
-                        <p>Earn even more on your first 3 listings.</p>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/slide3.png');">
-                    <div class="slide-content">
-                        <h2>Pengiriman Cepat</h2>
-                        <p>Nikmati layanan pengiriman ekspres ke seluruh Indonesia</p>
-                    </div>
-                </div>
+        <!-- Navigation Arrows -->
+        <div class="carousel-arrow carousel-arrow-left">
+            <i class="arrow-icon arrow-left"></i>
+        </div>
+        <div class="carousel-arrow carousel-arrow-right">
+            <i class="arrow-icon arrow-right"></i>
+        </div>
+
+        <!-- Carousel Indicators -->
+        <div class="carousel-controls">
+            <div class="indicator active"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
+        </div>
+    </div>
+
+    <!-- Login panel -->
+    <div class="login-container">
+        <div class="login-form">
+            <!-- Heading -->
+            <div class="login-header">
+                <h2>Welcome Back</h2>
             </div>
 
-            <!-- Navigation Arrows -->
-            <div class="carousel-arrow carousel-arrow-left">
-                <i class="arrow-icon arrow-left"></i>
-            </div>
-            <div class="carousel-arrow carousel-arrow-right">
-                <i class="arrow-icon arrow-right"></i>
-            </div>
+            <!-- Error message if any -->
+            <?php if ($error): ?>
+                <div class="error-message"><?= htmlspecialchars($error); ?></div>
+            <?php endif; ?>
 
-            <!-- Carousel Indicators -->
-            <div class="carousel-indicators">
-                <div class="indicator active"></div>
-                <div class="indicator"></div>
-                <div class="indicator"></div>
+            <!-- Login form -->
+            <form method="POST" action="">
+                <div class="form-group">
+                    <label for="nama_user">Username</label>
+                    <input type="text" id="nama_user" name="nama_user" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password_user">Password</label>
+                    <input type="password" id="password_user" name="password_user" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn">Sign In</button>
+            </form>
+
+            <!-- Registration link -->
+            <div class="link">
+                <p>Don't have an account? <a href="register.php">Register now</a></p>
             </div>
         </div>
     </div>
@@ -440,7 +493,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Carousel functionality
-            const carousel = document.querySelector('.carousel');
             const slides = document.querySelectorAll('.carousel-slide');
             const leftArrow = document.querySelector('.carousel-arrow-left');
             const rightArrow = document.querySelector('.carousel-arrow-right');
@@ -449,9 +501,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             let currentIndex = 0;
             const slideCount = slides.length;
             
-            // Function to update carousel position
+            // Function to update carousel
             function updateCarousel() {
-                carousel.style.transform = `translateX(${-currentIndex * 100}%)`;
+                // Remove active class from all slides
+                slides.forEach(slide => slide.classList.remove('active'));
+                
+                // Add active class to current slide
+                slides[currentIndex].classList.add('active');
                 
                 // Update indicators
                 indicators.forEach((indicator, index) => {
@@ -491,12 +547,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             let intervalId = setInterval(nextSlide, 5000);
             
             // Pause auto-play on hover
-            carousel.addEventListener('mouseenter', () => {
+            document.querySelector('.carousel').addEventListener('mouseenter', () => {
                 clearInterval(intervalId);
             });
             
             // Resume auto-play when mouse leaves
-            carousel.addEventListener('mouseleave', () => {
+            document.querySelector('.carousel').addEventListener('mouseleave', () => {
                 intervalId = setInterval(nextSlide, 5000);
             });
         });
