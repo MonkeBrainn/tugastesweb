@@ -20,34 +20,125 @@ $foto_user = isset($_SESSION["foto_user"]) && !empty($_SESSION["foto_user"]) ? h
     
     <!-- Google Fonts - Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        /* Top Bar Styles */
+        .top-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            width: 200px;
+        }
+        
+        .search-bar i {
+            color: #555;
+            margin-right: 5px;
+        }
+        
+        .search-bar input {
+            border: none;
+            border-bottom: 1px solid #ddd;
+            outline: none;
+            padding: 5px;
+            width: 100%;
+            font-size: 14px;
+        }
+        
+        .logo-container {
+            text-align: center;
+        }
+        
+        .logo-container img {
+            height: 40px;
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            width: 200px;
+            justify-content: flex-end;
+        }
+        
+        .user-actions a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* Category Navigation */
+        .category-menu {
+            display: flex;
+            justify-content: center;
+            background-color: #ffffff;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .category-menu a {
+            color: #333;
+            text-decoration: none;
+            padding: 0 25px;
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-right: 1px solid #eee;
+        }
+        
+        .category-menu a:last-child {
+            border-right: none;
+        }
+        
+        .category-menu a:hover {
+            color: #000;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <!-- Informasi toko -->
-        <div class="store-info">
-            <h1>ReBelle Bags</h1>
-            <p>Luxury Secondhand, First-Class Quality</p>
+    <!-- Top Navigation Bar (Hermès Style) -->
+    <div class="top-navbar">
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search">
         </div>
-        <!-- Informasi pengguna -->
-        <div class="user-info">
-            <span>Halo, <?php echo $nama_user; ?></span>
-            <img src="<?php echo $foto_user; ?>" alt="Foto Profil">
+        
+        <div class="logo-container">
+            <h1>ReLux</h1>
         </div>
-    </header>
-
-    <!-- Navigation -->
-    <nav>
-        <a href="index.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>">Home</a>
-        <a href="keranjang.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'keranjang.php' ? 'active' : ''; ?>">Keranjang</a>
-        <a href="riwayat.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'riwayat.php' ? 'active' : ''; ?>">Riwayat Belanja</a>
-        <a href="setting.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'setting.php' ? 'active' : ''; ?>">Setting User</a>
-        <a href="logout.php">Logout</a>
-    </nav>
+        
+        <div class="user-actions">
+            <a href="setting.php">
+                <i class="fas fa-user"></i> Account
+            </a>
+            <a href="keranjang.php">
+                <i class="fas fa-shopping-bag"></i> Cart
+            </a>
+        </div>
+    </div>
+    
+    <!-- Category Navigation -->
+    <div class="category-menu">
+        <a href="index.php">HOME</a>
+        <a href="kategori.php?id=1">OUTDOOR AND EQUESTRIAN</a>
+        <a href="kategori.php?id=2">JEWELRY AND WATCHES</a>
+        <a href="kategori.php?id=3">FRAGRANCES</a>
+        <a href="kategori.php?id=4">GIFTS</a>
+        <a href="about.php">ABOUT</a>
+    </div>
 
     <!-- Main content container -->
     <div class="main-content">
         <!-- Content will be injected here -->
-        <div class="content">
-            <!-- Your content goes here -->
-        </div> 
