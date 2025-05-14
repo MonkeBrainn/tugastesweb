@@ -106,6 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReLuxe - Where fashion finds a second life</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Add Alice font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Alice&display=swap" rel="stylesheet">
     <style>
         /* Reset and base styles */
         * {
@@ -157,28 +159,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .carousel-slide.active {
             opacity: 1;
-        }
-
-        .slide-content {
-            width: 100%;
-            text-align: center;
-            color: white;
-            z-index: 2;
-        }
-
-        .slide-content h2 {
-            font-size: 3.5rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .slide-content p {
-            font-size: 1.2rem;
-            max-width: 80%;
-            margin: 0 auto;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
 
         /* Navigation controls */
@@ -372,7 +352,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-decoration: underline;
         }
 
-        /* Logo */
+        /* Logo with Alice font */
         .brand-logo {
             position: absolute;
             top: 30px;
@@ -383,9 +363,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .brand-logo h1 {
             color: white;
             font-size: 2.2rem;
-            font-weight: 700;
+            font-weight: 400; /* Reduced to match Alice font style */
             letter-spacing: 2px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-family: 'Alice', serif; /* Alice font applied here */
         }
 
         /* Responsive styles */
@@ -404,40 +385,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             .brand-logo h1 {
                 font-size: 1.8rem;
             }
-
-            .slide-content h2 {
-                font-size: 2.5rem;
-            }
         }
     </style>
 </head>
 <body>
     <!-- Full-screen background image and carousel -->
     <div class="fullscreen-container">
-        <!-- Brand Logo -->
+        <!-- Brand Logo with Alice font -->
         <div class="brand-logo">
             <h1>ReLuxe</h1>
         </div>
 
-        <!-- Carousel -->
+        <!-- Carousel - Removed text overlay and gradient -->
         <div class="carousel">
-            <div class="carousel-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/slide1.png');">
-                <div class="slide-content">
-                    <h2>Premium Quality</h2>
-                    <p>Luxury Second Hand Products</p>
-                </div>
+            <div class="carousel-slide active" style="background-image: url('images/slide1.png');">
+                <!-- Removed slide content -->
             </div>
-            <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/slide2.png');">
-                <div class="slide-content">
-                    <h2>No Selling Fees</h2>
-                    <p>Earn even more on your first 3 listings</p>
-                </div>
+            <div class="carousel-slide" style="background-image: url('images/slide2.png');">
+                <!-- Removed slide content -->
             </div>
-            <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/slide3.png');">
-                <div class="slide-content">
-                    <h2>Pengiriman Cepat</h2>
-                    <p>Nikmati layanan pengiriman ekspres ke seluruh Indonesia</p>
-                </div>
+            <div class="carousel-slide" style="background-image: url('images/slide3.png');">
+                <!-- Removed slide content -->
             </div>
         </div>
 
