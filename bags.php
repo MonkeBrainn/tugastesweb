@@ -25,11 +25,14 @@ include 'header.php';
 // Get bag products from database
 // Based on your database structure, we'll query bag products by their IDs or names containing "bag"
 $query = "SELECT * FROM produk WHERE 
-          idproduk IN ('p202504002', 'p202504003', 'p202504004', 'p202504005') OR 
+          idproduk IN ('p202504002', 'p202504003', 'p202504004', 'p202504005'
+          , 'p202504006', 'p202504007', 'p202504008, 'p202504009', 'p2025040010) OR 
           LOWER(nama_produk) LIKE '%bag%' OR 
           LOWER(nama_produk) LIKE '%boston%' OR
           LOWER(nama_produk) LIKE '%pochette%' OR
-          LOWER(nama_produk) LIKE '%shoulder%'";
+          LOWER(nama_produk) LIKE '%shoulder%' OR
+          LOWER(nama_produk) LIKE '%tote%' OR
+          LOWER(nama_produk) LIKE '%puzzle%' OR"; 
 
 // Handle sorting
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'default';
