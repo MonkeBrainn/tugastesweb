@@ -112,7 +112,7 @@ $totalBags = mysqli_num_rows($result);
                 
                 // Add to cart button
                 echo '<div class="product-actions">';
-                echo '<form method="POST" action="proses/tambah_keranjang.php">';
+                echo '<form method="POST" action="tambah_keranjang.php">';
                 echo '<input type="hidden" name="idproduk" value="' . $row['idproduk'] . '">';
                 echo '<input type="hidden" name="nama_produk" value="' . $row['nama_produk'] . '">';
                 echo '<input type="hidden" name="harga" value="' . $row['harga'] . '">';
