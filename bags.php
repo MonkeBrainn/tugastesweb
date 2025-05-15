@@ -5,7 +5,16 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Include database connection
-include 'config/koneksi.php';
+// Changed from config/koneksi.php to koneksi.php
+require_once 'koneksi.php';
+
+// Create database connection using the Database class
+try {
+    $db = new Database();
+    $koneksi = $db->getConnection();
+} catch (Exception $e) {
+    die("Database connection failed: " . $e->getMessage());
+}
 
 // Set page title
 $page_title = "Bags Collection";
@@ -38,7 +47,7 @@ $totalBags = mysqli_num_rows($result);
     <!-- Page Header -->
     <div class="page-header">
         <h1>Bags Collection</h1>
-        <p>Discover our exclusive selection of luxury bags</p>
+        <p>Discover our available Secondhand luxury bags</p>
     </div>
     
     <!-- Filter and Sort Options (Optional) -->
@@ -65,7 +74,7 @@ $totalBags = mysqli_num_rows($result);
             // Loop through each product
             while ($row = mysqli_fetch_assoc($result)) {
                 // Format price with currency symbol
-                $formatted_price = "Rp " . number_format($row['harga'], 0, ',', '.');
+                $formatted_price = "$ " . number_format($row['harga'], 0, ',', '.');
                 
                 // Product card
                 echo '<div class="product-card">';
@@ -95,6 +104,11 @@ $totalBags = mysqli_num_rows($result);
             echo '<div class="no-products">';
             echo '<p>No bag products are currently available.</p>';
             echo '</div>';
+        }
+        
+        // Close the database connection when done
+        if (isset($db)) {
+            $db->closeConnection();
         }
         ?>
     </div>
@@ -152,16 +166,37 @@ $totalBags = mysqli_num_rows($result);
     /* Products grid styles */
     .products-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 30px;
+        padding: 10px 0 30px 0; 
     }
-    
+@media (min-width: 992px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .products-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
     /* Product card styles */
     .product-card {
         border: 1px solid #eee;
         border-radius: 4px;
         overflow: hidden;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
     
     .product-card:hover {
@@ -172,6 +207,7 @@ $totalBags = mysqli_num_rows($result);
     .product-image {
         height: 300px;
         overflow: hidden;
+        position: relative;
     }
     
     .product-image img {
@@ -259,3 +295,4 @@ $totalBags = mysqli_num_rows($result);
 // Include footer
 include 'footer.php';
 ?>
+
