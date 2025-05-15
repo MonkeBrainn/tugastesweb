@@ -29,8 +29,26 @@ $query = "SELECT * FROM produk WHERE
           LOWER(nama_produk) LIKE '%bag%' OR 
           LOWER(nama_produk) LIKE '%boston%' OR
           LOWER(nama_produk) LIKE '%pochette%' OR
-          LOWER(nama_produk) LIKE '%shoulder%'
-          ORDER BY idproduk DESC";
+          LOWER(nama_produk) LIKE '%shoulder%'";
+
+// Handle sorting
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'default';
+
+// Add ORDER BY clause based on sort parameter
+switch($sort) {
+    case 'price-asc':
+        $query .= " ORDER BY harga ASC";
+        break;
+    case 'price-desc':
+        $query .= " ORDER BY harga DESC";
+        break;
+    case 'newest':
+        $query .= " ORDER BY tanggal_tambah DESC"; // Assuming you have this column
+        break;
+    default:
+        $query .= " ORDER BY idproduk DESC";
+        break;
+}
 
 $result = mysqli_query($koneksi, $query);
 
@@ -43,7 +61,8 @@ if (!$result) {
 $totalBags = mysqli_num_rows($result);
 ?>
 
-<div class="container">
+<!-- Full-width container for the bags collection -->
+<div class="bags-full-width">
     <!-- Page Header -->
     <div class="page-header">
         <h1>Bags Collection</h1>
@@ -54,10 +73,10 @@ $totalBags = mysqli_num_rows($result);
     <div class="filter-options">
         <div class="filter-container">
             <select id="sortOptions" onchange="sortProducts(this.value)">
-                <option value="default">Sort By</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="newest">Newest Arrivals</option>
+                <option value="default" <?php if($sort == 'default') echo 'selected'; ?>>Sort By</option>
+                <option value="price-asc" <?php if($sort == 'price-asc') echo 'selected'; ?>>Price: Low to High</option>
+                <option value="price-desc" <?php if($sort == 'price-desc') echo 'selected'; ?>>Price: High to Low</option>
+                <option value="newest" <?php if($sort == 'newest') echo 'selected'; ?>>Newest Arrivals</option>
             </select>
         </div>
         
@@ -93,7 +112,14 @@ $totalBags = mysqli_num_rows($result);
                 
                 // Add to cart button
                 echo '<div class="product-actions">';
-                echo '<a href="proses/tambah_keranjang.php?id=' . $row['idproduk'] . '" class="add-to-cart-btn">Add to Cart</a>';
+                echo '<form method="POST" action="proses/tambah_keranjang.php">';
+                echo '<input type="hidden" name="idproduk" value="' . $row['idproduk'] . '">';
+                echo '<input type="hidden" name="nama_produk" value="' . $row['nama_produk'] . '">';
+                echo '<input type="hidden" name="harga" value="' . $row['harga'] . '">';
+                echo '<input type="hidden" name="gambar" value="' . $row['gambar'] . '">';
+                echo '<input type="hidden" name="quantity" value="1">';
+                echo '<button type="submit" name="add_to_cart" class="add-to-cart-btn">Add to Cart</button>';
+                echo '</form>';
                 echo '</div>';
                 
                 echo '</div>'; // End product-info
@@ -115,17 +141,18 @@ $totalBags = mysqli_num_rows($result);
 </div>
 
 <style>
-    /* Container styles */
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 40px 20px;
+    /* Full-width container styles */
+    .bags-full-width {
+        width: 100%;
+        padding: 40px 0;
+        background-color: #fff;
     }
     
     /* Page header styles */
     .page-header {
         text-align: center;
         margin-bottom: 40px;
+        padding: 0 20px;
     }
     
     .page-header h1 {
@@ -146,8 +173,11 @@ $totalBags = mysqli_num_rows($result);
         justify-content: space-between;
         align-items: center;
         margin-bottom: 30px;
-        padding-bottom: 20px;
+        padding: 0 20px 20px 20px;
         border-bottom: 1px solid #eee;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .filter-container select {
@@ -168,25 +198,28 @@ $totalBags = mysqli_num_rows($result);
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 30px;
-        padding: 10px 0 30px 0; 
+        padding: 10px 20px 30px 20px;
+        max-width: 1400px;
+        margin: 0 auto;
     }
-@media (min-width: 992px) {
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
 
-@media (min-width: 992px) {
-    .products-grid {
-        grid-template-columns: repeat(3, 1fr);
+    @media (min-width: 768px) {
+        .products-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
-}
 
-@media (min-width: 1200px) {
-    .products-grid {
-        grid-template-columns: repeat(4, 1fr);
+    @media (min-width: 992px) {
+        .products-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
     }
-}
+
+    @media (min-width: 1200px) {
+        .products-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
 
     /* Product card styles */
     .product-card {
@@ -197,6 +230,7 @@ $totalBags = mysqli_num_rows($result);
         height: 100%;
         display: flex;
         flex-direction: column;
+        background-color: #fff;
     }
     
     .product-card:hover {
@@ -247,6 +281,21 @@ $totalBags = mysqli_num_rows($result);
         margin-top: 15px;
     }
     
+    /* Success message styles */
+    .cart-success-message {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 4px;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        transition: opacity 0.5s ease;
+    }
+    
+    /* Add to cart button styles */
     .add-to-cart-btn {
         display: inline-block;
         width: 100%;
@@ -258,6 +307,8 @@ $totalBags = mysqli_num_rows($result);
         font-size: 14px;
         border-radius: 2px;
         transition: background-color 0.3s ease;
+        border: none;
+        cursor: pointer;
     }
     
     .add-to-cart-btn:hover {
@@ -280,19 +331,36 @@ $totalBags = mysqli_num_rows($result);
 <script>
     // Function to sort products
     function sortProducts(sortOption) {
-        // This is a placeholder - in a real implementation, you would:
-        // 1. Either reload the page with a query parameter for sorting
-        // 2. Or use AJAX to fetch and display sorted products
-        
-        // For now, we'll just reload with a sort parameter
-        if (sortOption !== 'default') {
-            window.location.href = 'bags.php?sort=' + sortOption;
-        }
+        window.location.href = 'bags.php?sort=' + sortOption;
     }
+    
+    // Add to cart success message
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check for URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const cartStatus = urlParams.get('cart');
+        
+        if (cartStatus === 'success') {
+            // Create success message
+            const successMessage = document.createElement('div');
+            successMessage.className = 'cart-success-message';
+            successMessage.innerHTML = 'Item added to cart successfully!';
+            
+            // Add to page
+            document.querySelector('.page-header').appendChild(successMessage);
+            
+            // Remove after 3 seconds
+            setTimeout(function() {
+                successMessage.style.opacity = '0';
+                setTimeout(function() {
+                    successMessage.remove();
+                }, 500);
+            }, 3000);
+        }
+    });
 </script>
 
 <?php
 // Include footer
 include 'footer.php';
 ?>
-
