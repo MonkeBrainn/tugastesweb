@@ -5,7 +5,6 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Include database connection
-// Changed from config/koneksi.php to koneksi.php
 require_once 'koneksi.php';
 
 // Create database connection using the Database class
@@ -22,17 +21,16 @@ $page_title = "Bags Collection";
 // Include header
 include 'header.php';
 
-// Get bag products from database
-// Based on your database structure, we'll query bag products by their IDs or names containing "bag"
+// Get bag products from database with the fixed query
 $query = "SELECT * FROM produk WHERE 
-          idproduk IN ('p202504002', 'p202504003', 'p202504004', 'p202504005'
-          , 'p202504006', 'p202504007', 'p202504008, 'p202504009', 'p2025040010) OR 
+          idproduk IN ('p202504002', 'p202504003', 'p202504004', 'p202504005', 
+          'p202504006', 'p202504007', 'p202504008', 'p202504009', 'p202504010', 'p202504014') OR 
           LOWER(nama_produk) LIKE '%bag%' OR 
           LOWER(nama_produk) LIKE '%boston%' OR
           LOWER(nama_produk) LIKE '%pochette%' OR
           LOWER(nama_produk) LIKE '%shoulder%' OR
           LOWER(nama_produk) LIKE '%tote%' OR
-          LOWER(nama_produk) LIKE '%puzzle%' OR"; 
+          LOWER(nama_produk) LIKE '%puzzle%'";
 
 // Handle sorting
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'default';
@@ -112,8 +110,9 @@ $totalBags = mysqli_num_rows($result);
                 echo '<div class="product-info">';
                 echo '<h3><a href="detail_produk.php?id=' . $row['idproduk'] . '">' . $row['nama_produk'] . '</a></h3>';
                 echo '<p class="product-price">' . $formatted_price . '</p>';
+                echo '</div>'; // End product-info
                 
-                // Add to cart button
+                // Add to cart button - now positioned absolutely via CSS
                 echo '<div class="product-actions">';
                 echo '<form method="POST" action="tambah_keranjang.php">';
                 echo '<input type="hidden" name="idproduk" value="' . $row['idproduk'] . '">';
@@ -125,7 +124,6 @@ $totalBags = mysqli_num_rows($result);
                 echo '</form>';
                 echo '</div>';
                 
-                echo '</div>'; // End product-info
                 echo '</div>'; // End product-card
             }
         } else {
@@ -224,7 +222,7 @@ $totalBags = mysqli_num_rows($result);
         }
     }
 
-    /* Product card styles */
+    /* Product card styles - Using the updated styles for fixed button height */
     .product-card {
         border: 1px solid #eee;
         border-radius: 4px;
@@ -234,6 +232,8 @@ $totalBags = mysqli_num_rows($result);
         display: flex;
         flex-direction: column;
         background-color: #fff;
+        position: relative; /* Added for positioning context */
+        padding-bottom: 60px; /* Added space for the button at bottom */
     }
     
     .product-card:hover {
@@ -260,6 +260,9 @@ $totalBags = mysqli_num_rows($result);
     
     .product-info {
         padding: 15px;
+        flex-grow: 1; /* Allow the info section to grow */
+        display: flex;
+        flex-direction: column;
     }
     
     .product-info h3 {
@@ -281,7 +284,11 @@ $totalBags = mysqli_num_rows($result);
     }
     
     .product-actions {
-        margin-top: 15px;
+        position: absolute; /* Position at the bottom */
+        bottom: 15px;
+        left: 15px;
+        right: 15px;
+        margin-top: auto; /* Push to bottom */
     }
     
     /* Success message styles */
