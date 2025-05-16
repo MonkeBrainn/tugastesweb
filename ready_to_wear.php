@@ -21,9 +21,9 @@ $page_title = "Ready to Wear Collection";
 // Include header
 include 'header.php';
 
-// Get ready-to-wear products from database
+// Get ready-to-wear products from database with the updated product IDs
 $query = "SELECT * FROM produk WHERE 
-          idproduk IN ('p202504006', 'p202504007', 'p202504008', 'p202504009') OR 
+          idproduk IN ('p202504016', 'p202504017', 'p202504018', 'p202504019', 'p202504020') OR 
           LOWER(nama_produk) LIKE '%dress%' OR 
           LOWER(nama_produk) LIKE '%shirt%' OR
           LOWER(nama_produk) LIKE '%coat%' OR
@@ -109,8 +109,9 @@ $totalItems = mysqli_num_rows($result);
                 echo '<div class="product-info">';
                 echo '<h3><a href="detail_produk.php?id=' . $row['idproduk'] . '">' . $row['nama_produk'] . '</a></h3>';
                 echo '<p class="product-price">' . $formatted_price . '</p>';
+                echo '</div>'; // End product-info
                 
-                // Add to cart button
+                // Add to cart button - now positioned absolutely via CSS
                 echo '<div class="product-actions">';
                 echo '<form method="POST" action="tambah_keranjang.php">';
                 echo '<input type="hidden" name="idproduk" value="' . $row['idproduk'] . '">';
@@ -122,7 +123,6 @@ $totalItems = mysqli_num_rows($result);
                 echo '</form>';
                 echo '</div>';
                 
-                echo '</div>'; // End product-info
                 echo '</div>'; // End product-card
             }
         } else {
@@ -221,7 +221,7 @@ $totalItems = mysqli_num_rows($result);
         }
     }
 
-    /* Product card styles */
+    /* Product card styles - Using the updated styles for fixed button height */
     .product-card {
         border: 1px solid #eee;
         border-radius: 4px;
@@ -231,6 +231,8 @@ $totalItems = mysqli_num_rows($result);
         display: flex;
         flex-direction: column;
         background-color: #fff;
+        position: relative; /* Added for positioning context */
+        padding-bottom: 60px; /* Added space for the button at bottom */
     }
     
     .product-card:hover {
@@ -257,6 +259,9 @@ $totalItems = mysqli_num_rows($result);
     
     .product-info {
         padding: 15px;
+        flex-grow: 1; /* Allow the info section to grow */
+        display: flex;
+        flex-direction: column;
     }
     
     .product-info h3 {
@@ -278,7 +283,11 @@ $totalItems = mysqli_num_rows($result);
     }
     
     .product-actions {
-        margin-top: 15px;
+        position: absolute; /* Position at the bottom */
+        bottom: 15px;
+        left: 15px;
+        right: 15px;
+        margin-top: auto; /* Push to bottom */
     }
     
     /* Success message styles */
