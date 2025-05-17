@@ -21,10 +21,6 @@ $page_title = "Bags Collection";
 // Include header
 include 'header.php';
 
-// Include product modal functionality
-include_once('product_modal.php');
-add_product_modal_assets();
-
 // Get bag products from database with the fixed query
 $query = "SELECT * FROM produk WHERE 
           idproduk IN ('p202504002', 'p202504003', 'p202504004', 'p202504005', 
@@ -103,16 +99,12 @@ $totalBags = mysqli_num_rows($result);
                 // Product card
                 echo '<div class="product-card product-item">';
                 
-                // Product image - Modified to work with product_modal.js
+                // Product image
                 echo '<div class="product-image">';
                 echo '<a href="detail_produk.php?id=' . $row['idproduk'] . '">';
-                echo '<img src="images/' . $row['gambar'] . '" alt="' . $row['nama_produk'] . '" class="product-image-img">';
+                echo '<img src="images/' . $row['gambar'] . '" alt="' . $row['nama_produk'] . '">';
                 echo '</a>';
                 echo '</div>';
-                
-                // Add hidden product details for modal
-                echo '<div class="product-name" style="display:none;">' . $row['nama_produk'] . '</div>';
-                echo '<div class="product-price" style="display:none;">' . $formatted_price . '</div>';
                 
                 // Product info
                 echo '<div class="product-info">';
@@ -120,7 +112,7 @@ $totalBags = mysqli_num_rows($result);
                 echo '<p class="product-price">' . $formatted_price . '</p>';
                 echo '</div>'; // End product-info
                 
-                // Add to cart button - now positioned absolutely via CSS
+                // Add to cart button
                 echo '<div class="product-actions">';
                 echo '<form method="POST" action="tambah_keranjang.php">';
                 echo '<input type="hidden" name="idproduk" value="' . $row['idproduk'] . '">';
@@ -148,6 +140,12 @@ $totalBags = mysqli_num_rows($result);
         ?>
     </div>
 </div>
+
+<!-- Add the stylesheet for the carousel -->
+<link rel="stylesheet" href="bag_carousel.css">
+
+<!-- Add the JavaScript for the carousel -->
+<script src="bag_carousel.js"></script>
 
 <style>
     /* Full-width container styles */
@@ -230,7 +228,7 @@ $totalBags = mysqli_num_rows($result);
         }
     }
 
-    /* Product card styles - Using the updated styles for fixed button height */
+    /* Product card styles */
     .product-card {
         border: 1px solid #eee;
         border-radius: 4px;
@@ -240,8 +238,8 @@ $totalBags = mysqli_num_rows($result);
         display: flex;
         flex-direction: column;
         background-color: #fff;
-        position: relative; /* Added for positioning context */
-        padding-bottom: 60px; /* Added space for the button at bottom */
+        position: relative;
+        padding-bottom: 60px;
     }
     
     .product-card:hover {
@@ -253,7 +251,7 @@ $totalBags = mysqli_num_rows($result);
         height: 300px;
         overflow: hidden;
         position: relative;
-        cursor: pointer; /* Add cursor pointer to indicate clickable */
+        cursor: pointer;
     }
     
     .product-image img {
@@ -269,7 +267,7 @@ $totalBags = mysqli_num_rows($result);
     
     .product-info {
         padding: 15px;
-        flex-grow: 1; /* Allow the info section to grow */
+        flex-grow: 1;
         display: flex;
         flex-direction: column;
     }
@@ -293,11 +291,11 @@ $totalBags = mysqli_num_rows($result);
     }
     
     .product-actions {
-        position: absolute; /* Position at the bottom */
+        position: absolute;
         bottom: 15px;
         left: 15px;
         right: 15px;
-        margin-top: auto; /* Push to bottom */
+        margin-top: auto;
     }
     
     /* Success message styles */
@@ -344,119 +342,6 @@ $totalBags = mysqli_num_rows($result);
     .no-products p {
         font-size: 16px;
         color: #666;
-    }
-    
-    /* Modal styles - Using the styles from product_modal.css */
-    .product-modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        padding-top: 50px;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0,0,0,0.8);
-    }
-    
-    .modal-content {
-        position: relative;
-        margin: auto;
-        padding: 0;
-        width: 80%;
-        max-width: 1000px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .modal-image-container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    #modalImage {
-        max-width: 100%;
-        max-height: 70vh;
-        object-fit: contain;
-    }
-    
-    .close-modal {
-        position: absolute;
-        top: 10px;
-        right: 25px;
-        color: white;
-        font-size: 35px;
-        font-weight: bold;
-        cursor: pointer;
-        z-index: 1001;
-    }
-    
-    .nav-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        padding: 16px;
-        color: white;
-        font-weight: bold;
-        font-size: 24px;
-        cursor: pointer;
-        background-color: rgba(0,0,0,0.3);
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 40px;
-        height: 40px;
-        transition: background-color 0.3s ease;
-    }
-    
-    .prev-btn {
-        left: 20px;
-    }
-    
-    .next-btn {
-        right: 20px;
-    }
-    
-    .nav-btn:hover {
-        background-color: rgba(0,0,0,0.5);
-    }
-    
-    .modal-product-info {
-        margin-top: 20px;
-        text-align: center;
-        color: white;
-        padding: 0 20px 20px 20px;
-    }
-    
-    .modal-product-info h3 {
-        font-size: 24px;
-        margin-bottom: 10px;
-    }
-    
-    .modal-price {
-        font-size: 20px;
-        font-weight: 600;
-    }
-    
-    .view-details-btn {
-        display: inline-block;
-        margin-top: 15px;
-        padding: 8px 20px;
-        background-color: #fff;
-        color: #000;
-        text-decoration: none;
-        border-radius: 2px;
-        font-size: 14px;
-        transition: background-color 0.3s ease;
-    }
-    
-    .view-details-btn:hover {
-        background-color: #eee;
     }
 </style>
 
