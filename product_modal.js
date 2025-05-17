@@ -194,19 +194,19 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // *** APPROACH 2: Add hardcoded alternatives for specific products ***
             
-            // If we have a specific product, add known alternatives
-            // more reliable approach for production
-            if (productName.includes("Underwater Barocco Silk Mini Shirt Dress")) {
-                // Clear any previously generated images to avoid duplicates
-                if (hasGeneratedImages) {
-                    window.productImages = [currentImageSrc];
-                }
-                
-                // Add specific alternative images for this product
-                // You would replace these with actual paths to your images
-                window.productImages.push("images/dress2.png");
-                window.productImages.push("images/dress3.png");
-                
+            // Identify product type from product name for better image mapping
+            let productType = identifyProductType(productName.toLowerCase());
+            
+            // Clear any previously generated images if we have specific alternatives
+            // to avoid duplicates with approach 1
+            if (hasGeneratedImages && getSpecificProductImages(productName, productType).length > 0) {
+                window.productImages = [currentImageSrc];
+            }
+            
+            // Add specific alternatives based on product name or detected product type
+            const specificImages = getSpecificProductImages(productName, productType);
+            if (specificImages.length > 0) {
+                window.productImages = window.productImages.concat(specificImages);
                 hasGeneratedImages = true;
             }
 
@@ -221,9 +221,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     window.productImages = [firstImage];
                 }
                 
-                // Add placeholder images
-                window.productImages.push("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='18' text-anchor='middle' dominant-baseline='middle' fill='%23999'%3EProduct View 2%3C/text%3E%3C/svg%3E");
-                window.productImages.push("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='18' text-anchor='middle' dominant-baseline='middle' fill='%23999'%3EProduct View 3%3C/text%3E%3C/svg%3E");
+                // Add placeholder images with product type-specific labels
+                window.productImages.push(generatePlaceholderImage(productType, 2));
+                window.productImages.push(generatePlaceholderImage(productType, 3));
+                
+                // Add additional angle-specific views based on product type
+                if (productType) {
+                    const viewTypes = getProductViewTypes(productType);
+                    for (let i = 0; i < viewTypes.length && window.productImages.length < 6; i++) {
+                        window.productImages.push(generatePlaceholderImage(productType, null, viewTypes[i]));
+                    }
+                }
             }
             
             // Log the final image array
@@ -237,4 +245,124 @@ document.addEventListener('DOMContentLoaded', function() {
             modal.style.display = 'block';
         });
     });
+    
+    // Helper function to identify product type from product name
+    function identifyProductType(productName) {
+        const productTypes = {
+            'dress': ['dress', 'gown', 'frock'],
+            'jacket': ['jacket', 'blazer', 'coat', 'bomber'],
+            'cardigan': ['cardigan', 'sweater', 'knit'],
+            'pants': ['pants', 'trousers', 'jeans', 'slacks', 'leggings'],
+            'skirt': ['skirt'],
+            'shirt': ['shirt', 'blouse', 'top'],
+            'shoes': ['shoes', 'sneakers', 'boots', 'sandals', 'heels'],
+            'accessory': ['bag', 'purse', 'scarf', 'hat', 'belt', 'jewelry', 'necklace', 'bracelet']
+        };
+        
+        for (const type in productTypes) {
+            for (const keyword of productTypes[type]) {
+                if (productName.includes(keyword)) {
+                    return type;
+                }
+            }
+        }
+        
+        return 'general'; // Default type if no match
+    }
+    
+    // Helper function to get specific images for known products
+    function getSpecificProductImages(productName, productType) {
+        const specificImages = [];
+        const productNameLower = productName.toLowerCase();
+        
+        // Specific product mappings
+        if (productNameLower.includes("underwater barocco silk mini shirt dress")) {
+            specificImages.push("images/dress1_front.png");
+            specificImages.push("images/dress1_back.png");
+        } 
+        else if (productNameLower.includes("leather biker jacket")) {
+            specificImages.push("images/jacket2.png");
+            specificImages.push("images/jacket3.png");
+            specificImages.push("images/jacket_back.png");
+        }
+        else if (productNameLower.includes("Crew neck marinière sweater in cashmere")) {
+            specificImages.push("images/cardigan1_front.png");
+        }
+        else if (productNameLower.includes("slim fit jeans")) {
+            specificImages.push("images/jeans_back.png");
+            specificImages.push("images/jeans_detail.png");
+        }
+        else if (productNameLower.includes("silk blouse")) {
+            specificImages.push("images/blouse_back.png");
+            specificImages.push("images/blouse_detail.png");
+        }
+        
+        // Generic product type mappings as fallback
+        if (specificImages.length === 0 && productType !== 'general') {
+            // Default image patterns for common product types
+            const defaultImages = {
+                'dress': [
+                    `images/${productType}_front.png`,
+                    `images/${productType}_back.png`,
+                    `images/${productType}_side.png`
+                ],
+                'jacket': [
+                    `images/${productType}_front.png`,
+                    `images/${productType}_back.png`,
+                    `images/${productType}_side.png`,
+                    `images/${productType}_detail.png`
+                ],
+                'cardigan': [
+                    `images/${productType}_front.png`,
+                ],
+                'pants': [
+                    `images/${productType}_front.png`,
+                    `images/${productType}_back.png`,
+                    `images/${productType}_detail.png`
+                ],
+                'skirt': [
+                    `images/${productType}_front.png`,
+                    `images/${productType}_back.png`,
+                    `images/${productType}_side.png`
+                ],
+                'shirt': [
+                    `images/${productType}_front.png`,
+                    `images/${productType}_back.png`,
+                    `images/${productType}_detail.png`
+                ]
+            };
+            
+            if (defaultImages[productType]) {
+                specificImages.push(...defaultImages[productType]);
+            }
+        }
+        
+        return specificImages;
+    }
+    
+    // Helper function to generate placeholder image with product type info
+    function generatePlaceholderImage(productType, viewNumber, viewType) {
+        // Default to view number if view type not specified
+        const viewLabel = viewType || (viewNumber ? `View ${viewNumber}` : "Alternative View");
+        const productLabel = productType !== 'general' ? productType.charAt(0).toUpperCase() + productType.slice(1) : "Product";
+        
+        return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='45%25' font-family='Arial' font-size='18' text-anchor='middle' dominant-baseline='middle' fill='%23999'%3E${productLabel}%3C/text%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-size='18' text-anchor='middle' dominant-baseline='middle' fill='%23999'%3E${viewLabel}%3C/text%3E%3C/svg%3E`;
+    }
+    
+    // Helper function to get product-specific view types
+    function getProductViewTypes(productType) {
+        // Different view types based on product category
+        const viewTypes = {
+            'dress': ['Front View', 'Back View', 'Side View', 'Detail View'],
+            'jacket': ['Front View', 'Back View', 'Side View', 'Collar Detail', 'Sleeve Detail'],
+            'cardigan': ['Front View', 'Back View', 'Fabric Detail', 'Button Detail'],
+            'pants': ['Front View', 'Back View', 'Side View', 'Waistband Detail'],
+            'skirt': ['Front View', 'Back View', 'Side View', 'Detail View'],
+            'shirt': ['Front View', 'Back View', 'Collar Detail', 'Fabric Detail'],
+            'shoes': ['Top View', 'Side View', 'Back View', 'Sole View'],
+            'accessory': ['Front View', 'Inside View', 'Detail View', 'Styling Example']
+        };
+        
+        return viewTypes[productType] || ['Alternate View', 'Detail View'];
+    }
 });
