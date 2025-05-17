@@ -103,7 +103,7 @@ $totalBags = mysqli_num_rows($result);
                 // Product card
                 echo '<div class="product-card product-item">';
                 
-                // Product image - Modified to work with modal
+                // Product image - Modified to work with product_modal.js
                 echo '<div class="product-image">';
                 echo '<a href="detail_produk.php?id=' . $row['idproduk'] . '">';
                 echo '<img src="images/' . $row['gambar'] . '" alt="' . $row['nama_produk'] . '" class="product-image-img">';
@@ -346,7 +346,7 @@ $totalBags = mysqli_num_rows($result);
         color: #666;
     }
     
-    /* Modal styles - Add these to support the product modal */
+    /* Modal styles - Using the styles from product_modal.css */
     .product-modal {
         display: none;
         position: fixed;
@@ -442,6 +442,22 @@ $totalBags = mysqli_num_rows($result);
         font-size: 20px;
         font-weight: 600;
     }
+    
+    .view-details-btn {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 8px 20px;
+        background-color: #fff;
+        color: #000;
+        text-decoration: none;
+        border-radius: 2px;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+    
+    .view-details-btn:hover {
+        background-color: #eee;
+    }
 </style>
 
 <script>
@@ -473,155 +489,7 @@ $totalBags = mysqli_num_rows($result);
                 }, 500);
             }, 3000);
         }
-        
-        // Store all products for navigation
-        const allProducts = [];
-        
-        // Collect all products for navigation
-        document.querySelectorAll('.product-item').forEach(function(productCard) {
-            const productData = {
-                name: productCard.querySelector('.product-name').textContent,
-                price: productCard.querySelector('.product-price').textContent,
-                image: productCard.querySelector('img').src,
-                id: productCard.querySelector('input[name="idproduk"]').value
-            };
-            allProducts.push(productData);
-        });
-        
-        // Set global variable for product navigation
-        window.allBagProducts = allProducts;
-        window.currentProductIndex = 0;
-        
-        // Add click handlers to product images for modal functionality
-        document.querySelectorAll('.product-image').forEach(function(imageContainer, index) {
-            imageContainer.addEventListener('click', function(e) {
-                // Only trigger modal if click is on the image or its container (not the link)
-                if (e.target === this || e.target.classList.contains('product-image-img')) {
-                    e.preventDefault();
-                    
-                    // Store current product index for navigation
-                    window.currentProductIndex = index;
-                    
-                    // Create modal if it doesn't exist
-                    if (!document.getElementById('productModal')) {
-                        createProductModal();
-                    }
-                    
-                    // Display the current product in modal
-                    showProductInModal(window.currentProductIndex);
-                    
-                    // Show modal
-                    document.getElementById('productModal').style.display = 'block';
-                }
-            });
-        });
     });
-    
-    // Function to create product modal
-    function createProductModal() {
-        const modal = document.createElement('div');
-        modal.id = 'productModal';
-        modal.className = 'product-modal';
-        
-        const modalContent = document.createElement('div');
-        modalContent.className = 'modal-content';
-        
-        const closeBtn = document.createElement('span');
-        closeBtn.className = 'close-modal';
-        closeBtn.innerHTML = '&times;';
-        
-        // Add left navigation button
-        const leftNavBtn = document.createElement('div');
-        leftNavBtn.className = 'nav-btn prev-btn';
-        leftNavBtn.innerHTML = '&#10094;'; // Left arrow
-        
-        // Add right navigation button
-        const rightNavBtn = document.createElement('div');
-        rightNavBtn.className = 'nav-btn next-btn';
-        rightNavBtn.innerHTML = '&#10095;'; // Right arrow
-        
-        const modalImgContainer = document.createElement('div');
-        modalImgContainer.className = 'modal-image-container';
-        
-        const modalImg = document.createElement('img');
-        modalImg.id = 'modalImage';
-        
-        const productInfo = document.createElement('div');
-        productInfo.className = 'modal-product-info';
-        
-        modalImgContainer.appendChild(modalImg);
-        modalContent.appendChild(closeBtn);
-        modalContent.appendChild(leftNavBtn);
-        modalContent.appendChild(modalImgContainer);
-        modalContent.appendChild(rightNavBtn);
-        modalContent.appendChild(productInfo);
-        modal.appendChild(modalContent);
-        
-        document.body.appendChild(modal);
-        
-        // Close modal when clicking the X
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-        
-        // Close modal when clicking outside the image
-        window.addEventListener('click', function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        });
-        
-        // Navigation button functionality
-        leftNavBtn.addEventListener('click', function() {
-            navigateImages('prev');
-        });
-        
-        rightNavBtn.addEventListener('click', function() {
-            navigateImages('next');
-        });
-        
-        // Keyboard navigation
-        document.addEventListener('keydown', function(event) {
-            if (modal.style.display === 'block') {
-                if (event.key === 'ArrowLeft') {
-                    navigateImages('prev');
-                } else if (event.key === 'ArrowRight') {
-                    navigateImages('next');
-                } else if (event.key === 'Escape') {
-                    modal.style.display = 'none';
-                }
-            }
-        });
-    }
-    
-    // Function to navigate between products
-    function navigateImages(direction) {
-        if (window.allBagProducts && window.allBagProducts.length > 1) {
-            if (direction === 'next') {
-                window.currentProductIndex = (window.currentProductIndex + 1) % window.allBagProducts.length;
-            } else {
-                window.currentProductIndex = (window.currentProductIndex - 1 + window.allBagProducts.length) % window.allBagProducts.length;
-            }
-            
-            // Show the new product
-            showProductInModal(window.currentProductIndex);
-        }
-    }
-    
-    // Function to display a product in the modal
-    function showProductInModal(index) {
-        const product = window.allBagProducts[index];
-        const modalImg = document.getElementById('modalImage');
-        const productInfo = document.querySelector('.modal-product-info');
-        
-        // Update image and product info
-        modalImg.src = product.image;
-        productInfo.innerHTML = `
-            <h3>${product.name}</h3>
-            <p class="modal-price">${product.price}</p>
-            <a href="detail_produk.php?id=${product.id}" class="view-details-btn">View Details</a>
-        `;
-    }
 </script>
 
 <?php
