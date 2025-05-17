@@ -132,9 +132,8 @@ $foto_user = isset($_SESSION["foto_user"]) && !empty($_SESSION["foto_user"]) ? h
     <!-- Category Navigation -->
     <div class="category-menu">
         <a href="bags.php">BAGS</a>
-        <a href="kategori.php?id=6">READY TO WEAR</a>
-        <a href="kategori.php?id=2">JEWELRY AND WATCHES</a>
-        <a href="kategori.php?id=7">SHOES</a>
+        <a href="jewelry_watches.php">JEWELRY AND WATCHES</a>
+        <a href="scarves.php">SCARVES</a>
         <a href="about.php">ABOUT</a>
     </div>
 

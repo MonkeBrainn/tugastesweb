@@ -21,6 +21,10 @@ $page_title = "Bags Collection";
 // Include header
 include 'header.php';
 
+// Include product modal functionality
+include_once('product_modal.php');
+add_product_modal_assets();
+
 // Get bag products from database with the fixed query
 $query = "SELECT * FROM produk WHERE 
           idproduk IN ('p202504002', 'p202504003', 'p202504004', 'p202504005', 
@@ -97,14 +101,18 @@ $totalBags = mysqli_num_rows($result);
                 $formatted_price = "$ " . number_format($row['harga'], 0, ',', '.');
                 
                 // Product card
-                echo '<div class="product-card">';
+                echo '<div class="product-card product-item">';
                 
-                // Product image
+                // Product image - Modified to work with modal
                 echo '<div class="product-image">';
                 echo '<a href="detail_produk.php?id=' . $row['idproduk'] . '">';
-                echo '<img src="images/' . $row['gambar'] . '" alt="' . $row['nama_produk'] . '">';
+                echo '<img src="images/' . $row['gambar'] . '" alt="' . $row['nama_produk'] . '" class="product-image-img">';
                 echo '</a>';
                 echo '</div>';
+                
+                // Add hidden product details for modal
+                echo '<div class="product-name" style="display:none;">' . $row['nama_produk'] . '</div>';
+                echo '<div class="product-price" style="display:none;">' . $formatted_price . '</div>';
                 
                 // Product info
                 echo '<div class="product-info">';
@@ -245,6 +253,7 @@ $totalBags = mysqli_num_rows($result);
         height: 300px;
         overflow: hidden;
         position: relative;
+        cursor: pointer; /* Add cursor pointer to indicate clickable */
     }
     
     .product-image img {
@@ -336,6 +345,103 @@ $totalBags = mysqli_num_rows($result);
         font-size: 16px;
         color: #666;
     }
+    
+    /* Modal styles - Add these to support the product modal */
+    .product-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        padding-top: 50px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.8);
+    }
+    
+    .modal-content {
+        position: relative;
+        margin: auto;
+        padding: 0;
+        width: 80%;
+        max-width: 1000px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .modal-image-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    #modalImage {
+        max-width: 100%;
+        max-height: 70vh;
+        object-fit: contain;
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 25px;
+        color: white;
+        font-size: 35px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1001;
+    }
+    
+    .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 24px;
+        cursor: pointer;
+        background-color: rgba(0,0,0,0.3);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        transition: background-color 0.3s ease;
+    }
+    
+    .prev-btn {
+        left: 20px;
+    }
+    
+    .next-btn {
+        right: 20px;
+    }
+    
+    .nav-btn:hover {
+        background-color: rgba(0,0,0,0.5);
+    }
+    
+    .modal-product-info {
+        margin-top: 20px;
+        text-align: center;
+        color: white;
+        padding: 0 20px 20px 20px;
+    }
+    
+    .modal-product-info h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    
+    .modal-price {
+        font-size: 20px;
+        font-weight: 600;
+    }
 </style>
 
 <script>
@@ -367,7 +473,155 @@ $totalBags = mysqli_num_rows($result);
                 }, 500);
             }, 3000);
         }
+        
+        // Store all products for navigation
+        const allProducts = [];
+        
+        // Collect all products for navigation
+        document.querySelectorAll('.product-item').forEach(function(productCard) {
+            const productData = {
+                name: productCard.querySelector('.product-name').textContent,
+                price: productCard.querySelector('.product-price').textContent,
+                image: productCard.querySelector('img').src,
+                id: productCard.querySelector('input[name="idproduk"]').value
+            };
+            allProducts.push(productData);
+        });
+        
+        // Set global variable for product navigation
+        window.allBagProducts = allProducts;
+        window.currentProductIndex = 0;
+        
+        // Add click handlers to product images for modal functionality
+        document.querySelectorAll('.product-image').forEach(function(imageContainer, index) {
+            imageContainer.addEventListener('click', function(e) {
+                // Only trigger modal if click is on the image or its container (not the link)
+                if (e.target === this || e.target.classList.contains('product-image-img')) {
+                    e.preventDefault();
+                    
+                    // Store current product index for navigation
+                    window.currentProductIndex = index;
+                    
+                    // Create modal if it doesn't exist
+                    if (!document.getElementById('productModal')) {
+                        createProductModal();
+                    }
+                    
+                    // Display the current product in modal
+                    showProductInModal(window.currentProductIndex);
+                    
+                    // Show modal
+                    document.getElementById('productModal').style.display = 'block';
+                }
+            });
+        });
     });
+    
+    // Function to create product modal
+    function createProductModal() {
+        const modal = document.createElement('div');
+        modal.id = 'productModal';
+        modal.className = 'product-modal';
+        
+        const modalContent = document.createElement('div');
+        modalContent.className = 'modal-content';
+        
+        const closeBtn = document.createElement('span');
+        closeBtn.className = 'close-modal';
+        closeBtn.innerHTML = '&times;';
+        
+        // Add left navigation button
+        const leftNavBtn = document.createElement('div');
+        leftNavBtn.className = 'nav-btn prev-btn';
+        leftNavBtn.innerHTML = '&#10094;'; // Left arrow
+        
+        // Add right navigation button
+        const rightNavBtn = document.createElement('div');
+        rightNavBtn.className = 'nav-btn next-btn';
+        rightNavBtn.innerHTML = '&#10095;'; // Right arrow
+        
+        const modalImgContainer = document.createElement('div');
+        modalImgContainer.className = 'modal-image-container';
+        
+        const modalImg = document.createElement('img');
+        modalImg.id = 'modalImage';
+        
+        const productInfo = document.createElement('div');
+        productInfo.className = 'modal-product-info';
+        
+        modalImgContainer.appendChild(modalImg);
+        modalContent.appendChild(closeBtn);
+        modalContent.appendChild(leftNavBtn);
+        modalContent.appendChild(modalImgContainer);
+        modalContent.appendChild(rightNavBtn);
+        modalContent.appendChild(productInfo);
+        modal.appendChild(modalContent);
+        
+        document.body.appendChild(modal);
+        
+        // Close modal when clicking the X
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside the image
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Navigation button functionality
+        leftNavBtn.addEventListener('click', function() {
+            navigateImages('prev');
+        });
+        
+        rightNavBtn.addEventListener('click', function() {
+            navigateImages('next');
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (modal.style.display === 'block') {
+                if (event.key === 'ArrowLeft') {
+                    navigateImages('prev');
+                } else if (event.key === 'ArrowRight') {
+                    navigateImages('next');
+                } else if (event.key === 'Escape') {
+                    modal.style.display = 'none';
+                }
+            }
+        });
+    }
+    
+    // Function to navigate between products
+    function navigateImages(direction) {
+        if (window.allBagProducts && window.allBagProducts.length > 1) {
+            if (direction === 'next') {
+                window.currentProductIndex = (window.currentProductIndex + 1) % window.allBagProducts.length;
+            } else {
+                window.currentProductIndex = (window.currentProductIndex - 1 + window.allBagProducts.length) % window.allBagProducts.length;
+            }
+            
+            // Show the new product
+            showProductInModal(window.currentProductIndex);
+        }
+    }
+    
+    // Function to display a product in the modal
+    function showProductInModal(index) {
+        const product = window.allBagProducts[index];
+        const modalImg = document.getElementById('modalImage');
+        const productInfo = document.querySelector('.modal-product-info');
+        
+        // Update image and product info
+        modalImg.src = product.image;
+        productInfo.innerHTML = `
+            <h3>${product.name}</h3>
+            <p class="modal-price">${product.price}</p>
+            <a href="detail_produk.php?id=${product.id}" class="view-details-btn">View Details</a>
+        `;
+    }
 </script>
 
 <?php
