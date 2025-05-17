@@ -1,0 +1,165 @@
+/* 
+ * jewelry_carousel.css - Styles for the jewelry & watches product carousel modal
+ * These styles are completely isolated from your existing CSS
+ * to avoid any conflicts with your current styling
+ */
+
+/* Modal container - full screen overlay */
+.jewelry-carousel-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal content container */
+.jewelry-carousel-content {
+    position: relative;
+    max-width: 90%;
+    width: 900px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Close button */
+.jewelry-carousel-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+    z-index: 10;
+}
+
+.jewelry-carousel-close:hover {
+    color: #ccc;
+}
+
+/* Image container */
+.jewelry-carousel-image-container {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+/* Product image */
+#jewelryCarouselImage {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+/* Navigation controls */
+.jewelry-carousel-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.jewelry-carousel-prev,
+.jewelry-carousel-next {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    outline: none;
+}
+
+.jewelry-carousel-prev:hover,
+.jewelry-carousel-next:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Product counter */
+.jewelry-carousel-counter {
+    color: white;
+    font-size: 14px;
+}
+
+/* Product information */
+.jewelry-carousel-info {
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.jewelry-carousel-info h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+#jewelryCarouselPrice {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.jewelry-carousel-details {
+    display: inline-block;
+    background-color: white;
+    color: black;
+    padding: 8px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.jewelry-carousel-details:hover {
+    background-color: #eee;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .jewelry-carousel-content {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .jewelry-carousel-image-container {
+        height: 50vh;
+    }
+    
+    .jewelry-carousel-info h3 {
+        font-size: 18px;
+    }
+    
+    #jewelryCarouselPrice {
+        font-size: 16px;
+    }
+}
+
+/* Animation for smoother transitions */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.jewelry-carousel-modal {
+    animation: fadeIn 0.3s;
+}

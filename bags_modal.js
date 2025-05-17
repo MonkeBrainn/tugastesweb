@@ -1,154 +1,78 @@
 // Product image modal functionality with carousel for bags collection
 document.addEventListener('DOMContentLoaded', function() {
-    // Store product images array as a global variable
-    window.productImages = [];
-    window.currentImageIndex = 0;
+    // Store all products information globally
+    window.allProducts = [];
+    window.currentProductIndex = 0;
     
     // Add click handlers to all product images in the bags collection
-    const productImgElements = document.querySelectorAll('.product-image-img');
+    const productItems = document.querySelectorAll('.product-item');
     
-    productImgElements.forEach(function(img) {
-        img.addEventListener('click', function(e) {
+    // First, collect all product information
+    productItems.forEach(function(item, index) {
+        const productImg = item.querySelector('.product-image-img');
+        const productName = item.querySelector('.product-name').textContent;
+        const productPrice = item.querySelector('.product-price').textContent;
+        const productId = item.querySelector('input[name="idproduk"]').value;
+        
+        // Store product info
+        window.allProducts.push({
+            index: index,
+            imageSrc: productImg.src,
+            name: productName,
+            price: productPrice,
+            id: productId
+        });
+    });
+    
+    console.log("Loaded " + window.allProducts.length + " bag products");
+    
+    // Then add click handlers
+    productItems.forEach(function(item, index) {
+        const productImg = item.querySelector('.product-image-img');
+        
+        productImg.addEventListener('click', function(e) {
             // Prevent default link behavior if inside an <a> tag
             e.preventDefault();
             e.stopPropagation();
-            
-            // Get parent container
-            const productItem = this.closest('.product-item');
-            
-            // Find product details (these are hidden elements we added)
-            const productName = productItem.querySelector('.product-name').textContent;
-            const productPrice = productItem.querySelector('.product-price').textContent;
-            const productId = productItem.querySelector('input[name="idproduk"]').value;
             
             // Create modal if it doesn't exist
             if (!document.getElementById('productModal')) {
                 createProductModal();
             }
             
-            // Reset current image index
-            window.currentImageIndex = 0;
+            // Set current product index
+            window.currentProductIndex = index;
             
-            // Use the current image as the base
-            let currentImageSrc = this.src;
+            // Display the current product
+            displayProductInModal(window.currentProductIndex);
             
-            // Create array of images for this product
-            window.productImages = [];
-            
-            // First add the current image
-            window.productImages.push(currentImageSrc);
-            
-            // Extract image base path and filename
-            const basePath = currentImageSrc.substring(0, currentImageSrc.lastIndexOf('/') + 1);
-            const fileName = currentImageSrc.substring(currentImageSrc.lastIndexOf('/') + 1);
-            const extension = fileName.substring(fileName.lastIndexOf('.'));
-            const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
-            
-            // Generate additional bag images based on common patterns
-            const bagTypes = ['front', 'back', 'side', 'inside', 'detail', 'styling'];
-            
-            // First try: Check if filename is like "bag1" or "tote_black" and generate variations
-            const basePatternMatch = baseName.match(/^([a-zA-Z_]+)(\d*)(_[a-zA-Z]+)?$/);
-            
-            if (basePatternMatch) {
-                const prefix = basePatternMatch[1];
-                const number = basePatternMatch[2] || '';
-                const suffix = basePatternMatch[3] || '';
-                
-                // Add default bag views
-                for (let i = 0; i < bagTypes.length; i++) {
-                    const newImageName = `${prefix}${number}_${bagTypes[i]}${suffix}${extension}`;
-                    const newImage = basePath + newImageName;
-                    
-                    // Only add if it's not the current image
-                    if (newImage !== currentImageSrc) {
-                        window.productImages.push(newImage);
-                    }
-                }
-                
-                // Add color variations if this is a base product
-                if (!baseName.includes('_')) {
-                    const colors = ['black', 'brown', 'beige', 'red', 'blue'];
-                    for (let i = 0; i < colors.length; i++) {
-                        const colorVariant = `${prefix}${number}_${colors[i]}${extension}`;
-                        window.productImages.push(basePath + colorVariant);
-                    }
-                }
-            }
-            
-            // If the product name contains "bag" keywords, add some bag-specific views
-            const bagKeywords = ['bag', 'tote', 'purse', 'pochette', 'boston', 'shoulder', 'puzzle'];
-            const nameLower = productName.toLowerCase();
-            
-            let hasBagKeyword = false;
-            for (const keyword of bagKeywords) {
-                if (nameLower.includes(keyword)) {
-                    hasBagKeyword = true;
-                    break;
-                }
-            }
-            
-            if (hasBagKeyword) {
-                // Add common bag view patterns
-                const viewPositions = ['front', 'back', 'side', 'inside', 'closeup', 'strap'];
-                
-                for (const view of viewPositions) {
-                    // Extract product identifier (typically starts with p followed by numbers)
-                    const productIdMatch = baseName.match(/^(p\d+)/);
-                    if (productIdMatch) {
-                        const idPrefix = productIdMatch[1];
-                        const viewImage = `${basePath}${idPrefix}_${view}${extension}`;
-                        
-                        // Don't add duplicates
-                        if (!window.productImages.includes(viewImage)) {
-                            window.productImages.push(viewImage);
-                        }
-                    }
-                }
-            }
-            
-            // If we couldn't generate many images, add placeholder SVGs
-            if (window.productImages.length < 3) {
-                // Keep only the first real image
-                const firstImage = window.productImages[0];
-                window.productImages = [firstImage];
-                
-                // Add placeholder SVGs for different bag views
-                for (let i = 0; i < bagTypes.length; i++) {
-                    const placeholderSrc = generateBagPlaceholder(bagTypes[i], productName);
-                    window.productImages.push(placeholderSrc);
-                }
-            }
-            
-            console.log("Product images for modal:", window.productImages);
-            
-            // Set modal content
+            // Show modal
+            document.getElementById('productModal').style.display = 'block';
+        });
+    });
+    
+    // Function to display the current product in the modal
+    function displayProductInModal(index) {
+        if (index >= 0 && index < window.allProducts.length) {
+            const product = window.allProducts[index];
             const modal = document.getElementById('productModal');
             const modalImg = document.getElementById('modalImage');
             const productInfo = document.querySelector('.modal-product-info');
             
-            // Set initial image and product info
-            modalImg.src = window.productImages[window.currentImageIndex];
+            // Set image and product info
+            modalImg.src = product.imageSrc;
             productInfo.innerHTML = `
-                <h3>${productName}</h3>
-                <p class="modal-price">${productPrice}</p>
-                <a href="detail_produk.php?id=${productId}" class="view-details-btn">View Details</a>
+                <h3>${product.name}</h3>
+                <p class="modal-price">${product.price}</p>
+                <a href="detail_produk.php?id=${product.id}" class="view-details-btn">View Details</a>
             `;
             
-            // Show modal
-            modal.style.display = 'block';
-        });
-    });
-    
-    // Helper function to generate bag placeholder images
-    function generateBagPlaceholder(viewType, productName) {
-        // Format product name for display
-        const displayName = productName.length > 25 ? productName.substring(0, 22) + '...' : productName;
-        
-        // Format view type for display
-        const formattedViewType = viewType.charAt(0).toUpperCase() + viewType.slice(1) + ' View';
-        
-        return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 800 800'%3E%3Crect width='800' height='800' fill='%23f8f8f8'/%3E%3Crect x='200' y='150' width='400' height='500' rx='10' fill='%23e0e0e0'/%3E%3Cpath d='M350,150 L350,120 Q350,80 400,80 Q450,80 450,120 L450,150' stroke='%23d0d0d0' stroke-width='10' fill='none'/%3E%3Ctext x='400' y='400' font-family='Arial' font-size='24' text-anchor='middle' fill='%23808080'%3E${encodeURIComponent(displayName)}%3C/text%3E%3Ctext x='400' y='440' font-family='Arial' font-size='20' text-anchor='middle' fill='%23a0a0a0'%3E${formattedViewType}%3C/text%3E%3C/svg%3E`;
+            // Update navigation info
+            const navInfo = document.getElementById('modalNavInfo');
+            if (navInfo) {
+                navInfo.textContent = `Product ${index + 1} of ${window.allProducts.length}`;
+            }
+        }
     }
     
     // Function to create product modal with navigation buttons
@@ -187,12 +111,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const productInfo = document.createElement('div');
         productInfo.className = 'modal-product-info';
         
+        // Add navigation info display
+        const navInfo = document.createElement('div');
+        navInfo.id = 'modalNavInfo';
+        navInfo.className = 'modal-nav-info';
+        
         modalImgContainer.appendChild(modalImg);
         modalContent.appendChild(closeBtn);
         modalContent.appendChild(leftNavBtn);
         modalContent.appendChild(modalImgContainer);
         modalContent.appendChild(rightNavBtn);
         modalContent.appendChild(productInfo);
+        modalContent.appendChild(navInfo);
         modal.appendChild(modalContent);
         
         document.body.appendChild(modal);
@@ -211,20 +141,20 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Navigation button functionality
         leftNavBtn.addEventListener('click', function() {
-            navigateImages('prev');
+            navigateProducts('prev');
         });
         
         rightNavBtn.addEventListener('click', function() {
-            navigateImages('next');
+            navigateProducts('next');
         });
         
         // Keyboard navigation
         document.addEventListener('keydown', function(event) {
             if (modal.style.display === 'block') {
                 if (event.key === 'ArrowLeft') {
-                    navigateImages('prev');
+                    navigateProducts('prev');
                 } else if (event.key === 'ArrowRight') {
-                    navigateImages('next');
+                    navigateProducts('next');
                 } else if (event.key === 'Escape') {
                     modal.style.display = 'none';
                 }
@@ -232,24 +162,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Function to navigate between images
-    function navigateImages(direction) {
-        const modalImg = document.getElementById('modalImage');
+    // Helper function to generate bag placeholder images
+    function generateBagPlaceholder(viewType, productName) {
+        // Format product name for display
+        const displayName = productName.length > 25 ? productName.substring(0, 22) + '...' : productName;
         
-        if (window.productImages && window.productImages.length > 1) {
+        // Format view type for display
+        const formattedViewType = viewType.charAt(0).toUpperCase() + viewType.slice(1) + ' View';
+        
+        return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 800 800'%3E%3Crect width='800' height='800' fill='%23f8f8f8'/%3E%3Crect x='200' y='150' width='400' height='500' rx='10' fill='%23e0e0e0'/%3E%3Cpath d='M350,150 L350,120 Q350,80 400,80 Q450,80 450,120 L450,150' stroke='%23d0d0d0' stroke-width='10' fill='none'/%3E%3Ctext x='400' y='400' font-family='Arial' font-size='24' text-anchor='middle' fill='%23808080'%3E${encodeURIComponent(displayName)}%3C/text%3E%3Ctext x='400' y='440' font-family='Arial' font-size='20' text-anchor='middle' fill='%23a0a0a0'%3E${formattedViewType}%3C/text%3E%3C/svg%3E`;
+    }
+    
+    // Function to navigate between different products
+    function navigateProducts(direction) {
+        if (window.allProducts && window.allProducts.length > 1) {
             if (direction === 'next') {
-                window.currentImageIndex = (window.currentImageIndex + 1) % window.productImages.length;
+                window.currentProductIndex = (window.currentProductIndex + 1) % window.allProducts.length;
             } else {
-                window.currentImageIndex = (window.currentImageIndex - 1 + window.productImages.length) % window.productImages.length;
+                window.currentProductIndex = (window.currentProductIndex - 1 + window.allProducts.length) % window.allProducts.length;
             }
             
-            console.log(`Navigating ${direction} to image ${window.currentImageIndex + 1}/${window.productImages.length}`);
+            console.log(`Navigating to product ${window.currentProductIndex + 1}/${window.allProducts.length}`);
             
-            // Update the image source
-            modalImg.src = window.productImages[window.currentImageIndex];
+            // Update the modal with the new product
+            displayProductInModal(window.currentProductIndex);
         }
     }
     
-    // Expose the navigateImages function globally
-    window.navigateImages = navigateImages;
+    // Expose the navigateProducts function globally
+    window.navigateProducts = navigateProducts;
 });

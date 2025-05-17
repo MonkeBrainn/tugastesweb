@@ -1,13 +1,13 @@
 <?php
-// Start session if not started
+// Start session if not already started
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Include connection
+// Include database connection
 require_once 'koneksi.php';
 
-// Create database connection using Database class
+// Create database connection using the Database class
 try {
     $db = new Database();
     $koneksi = $db->getConnection();
@@ -15,21 +15,22 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-// Page title
-$page_title = "Jewelry & Watches Collection";
+// Set page title
+$page_title = "Scarves Collection";
 
 // Include header
 include 'header.php';
 
-// Get jewelry and watches products from database with specific details
+// Get scarf products from database with specific query
 $query = "SELECT * FROM produk WHERE 
-          idproduk IN ('p202504016', 'p202504017', 'p202504018', 'p202504019', 'p202504020') OR 
-          LOWER(nama_produk) LIKE '%jewelry%' OR 
-          LOWER(nama_produk) LIKE '%watch%' OR
-          LOWER(nama_produk) LIKE '%bracelet%' OR
-          LOWER(nama_produk) LIKE '%necklace%' OR
-          LOWER(nama_produk) LIKE '%ring%' OR
-          LOWER(nama_produk) LIKE '%earring%'";
+          idproduk IN ('p202504022', 'p202504023', 'p202504024', 
+          'p202504025') OR 
+          LOWER(nama_produk) LIKE '%scarf%' OR 
+          LOWER(nama_produk) LIKE '%scarves%' OR
+          LOWER(nama_produk) LIKE '%shawl%' OR
+          LOWER(nama_produk) LIKE '%silk%' OR
+          LOWER(nama_produk) LIKE '%twilly%' OR
+          LOWER(nama_produk) LIKE '%bandana%'";
 
 // Handle sorting
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'default';
@@ -57,16 +58,16 @@ if (!$result) {
     die("Database query failed: " . mysqli_error($koneksi));
 }
 
-// Count the number of jewelry and watches products
-$totalItems = mysqli_num_rows($result);
+// Count the number of scarf products
+$totalScarves = mysqli_num_rows($result);
 ?>
 
-<!-- Full-width container for the jewelry & watches collection -->
-<div class="jewelry-watches-full-width">
+<!-- Full-width container for the scarves collection -->
+<div class="scarves-full-width">
     <!-- Page Header -->
     <div class="page-header">
-        <h1>Jewelry & Watches Collection</h1>
-        <p>Discover our exquisite selection of secondhand luxury jewelry and timepieces</p>
+        <h1>Scarves Collection</h1>
+        <p>Discover our luxurious selection of secondhand designer scarves</p>
     </div>
     
     <!-- Filter and Sort Options -->
@@ -81,15 +82,15 @@ $totalItems = mysqli_num_rows($result);
         </div>
         
         <div class="results-count">
-            <?php echo $totalItems; ?> products found
+            <?php echo $totalScarves; ?> products found
         </div>
     </div>
     
     <!-- Products Grid -->
     <div class="products-grid">
         <?php
-        // Check if there are any jewelry or watches products
-        if ($totalItems > 0) {
+        // Check if there are any scarf products
+        if ($totalScarves > 0) {
             // Loop through each product
             while ($row = mysqli_fetch_assoc($result)) {
                 // Format price with currency symbol
@@ -126,9 +127,9 @@ $totalItems = mysqli_num_rows($result);
                 echo '</div>'; // End product-card
             }
         } else {
-            // No jewelry or watches products found
+            // No scarf products found
             echo '<div class="no-products">';
-            echo '<p>No jewelry or watches products are currently available.</p>';
+            echo '<p>No scarf products are currently available.</p>';
             echo '</div>';
         }
         
@@ -141,14 +142,14 @@ $totalItems = mysqli_num_rows($result);
 </div>
 
 <!-- Add the stylesheet for the carousel -->
-<link rel="stylesheet" href="jewelry_carousel.css">
+<link rel="stylesheet" href="scarves_carousel.css">
 
 <!-- Add the JavaScript for the carousel -->
-<script src="jewelry_carousel.js"></script>
+<script src="scarves_carousel.js"></script>
 
 <style>
     /* Full-width container styles */
-    .jewelry-watches-full-width {
+    .scarves-full-width {
         width: 100%;
         padding: 40px 0;
         background-color: #fff;
@@ -347,7 +348,7 @@ $totalItems = mysqli_num_rows($result);
 <script>
     // Function to sort products
     function sortProducts(sortOption) {
-        window.location.href = 'jewelry_watches.php?sort=' + sortOption;
+        window.location.href = 'scarves.php?sort=' + sortOption;
     }
     
     // Add to cart success message
