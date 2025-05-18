@@ -177,7 +177,7 @@ $message = "Error: " . htmlspecialchars($e->getMessage());
 <title>Pengaturan Profil - Toko Online</title>
 <!-- CSS eksternal -->
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="setting.css">
 </head>
 <body>
 <!-- Sertakan header -->
