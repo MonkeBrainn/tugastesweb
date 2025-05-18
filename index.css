@@ -1,16 +1,20 @@
 /* 
  * index.css - Styles for the product display page
- * Inspired by the bag carousel design with a luxury feel
+ * Redesigned to match the luxury jewelry display website
  */
 
 :root {
   --primary-color: #d4af37;
   --secondary-color: #333;
-  --background-color: #f9f9f9;
+  --background-color: #fff;
   --card-background: #fff;
-  --text-color: #222;
-  --price-color: #000;
-  --button-hover: #b8960b;
+  --text-color: #333;
+  --price-color: #333;
+  --button-color: #000;
+  --button-text: #fff;
+  --button-hover: #333;
+  --card-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s;
 }
 
 body {
@@ -21,97 +25,180 @@ body {
   color: var(--text-color);
 }
 
+/* Hero Section */
+.hero-section {
+  background-color: #fff;
+  padding: 60px 20px 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.hero-content h1 {
+  color: #000;
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-transform: none;
+  letter-spacing: 1px;
+}
+
+.hero-content p {
+  color: #666;
+  font-size: 14px;
+  max-width: 700px;
+  margin: 0 auto;
+  font-weight: 300;
+}
+
+/* Filter Options */
+.filter-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+}
+
+.filter-container select {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 8px 30px 8px 10px;
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 14px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px top 50%;
+  background-size: 10px auto;
+}
+
+.filter-container .sort-label {
+  margin-right: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.results-count {
+  color: #666;
+  font-size: 14px;
+}
+
 /* Product container styling */
 .product-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 30px;
-  padding: 40px;
-  max-width: 1400px;
+  padding: 0 20px 40px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 /* Product card styling */
 .card {
   background-color: var(--card-background);
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  box-shadow: var(--card-shadow);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  opacity: 0;
-  animation: fadeIn 0.5s forwards;
-  animation-delay: calc(var(--delay) * 0.1s);
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  opacity: 1;
+  border: none;
 }
 
 .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Image container */
 .img-container {
   height: 250px;
   overflow: hidden;
-  background-color: #ebe8e2;
+  background-color: #f8f8f8;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .img-container img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: transform 0.5s ease;
+  transition: transform 0.3s ease;
 }
 
 .card:hover .img-container img {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 /* Content area */
 .content {
-  padding: 20px;
+  padding: 15px 0;
   text-align: center;
 }
 
 .content h3 {
-  margin: 0 0 10px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--secondary-color);
+  margin: 0 0 5px 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #333;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.3;
 }
 
 .price {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 400;
   color: var(--price-color);
-  margin: 8px 0;
+  margin: 5px 0;
 }
 
 .desc {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 20px;
-  font-style: italic;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 15px;
+  font-style: normal;
 }
 
 /* Button styling */
 .btn {
-  background-color: var(--primary-color);
-  color: white;
+  background-color: var(--button-color);
+  color: var(--button-text);
   border: none;
-  padding: 12px 25px;
-  border-radius: 4px;
+  padding: 8px 15px;
+  border-radius: 0;
   cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+  font-weight: 400;
+  transition: background-color var(--transition-speed) ease;
   width: 100%;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 14px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 12px;
 }
 
 .btn:hover {
   background-color: var(--button-hover);
+}
+
+/* Add to Cart button styling */
+.add-to-cart {
+  background-color: #000;
+  color: #fff;
+  font-size: 12px;
+  padding: 8px 0;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 /* Modal styling */
@@ -123,7 +210,7 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.5);
   align-items: center;
   justify-content: center;
 }
@@ -133,67 +220,79 @@ body {
 }
 
 .modal-content {
-  background-color: white;
+  background-color: #fff;
   padding: 30px;
-  border-radius: 8px;
+  border-radius: 2px;
   text-align: center;
   max-width: 400px;
   width: 90%;
-  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
   animation: modalFadeIn 0.3s;
+  color: #333;
 }
 
 .modal-content p {
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 20px;
+  color: #333;
 }
 
 /* Error message */
 .message.error {
-  background-color: #ffebee;
+  background-color: rgba(198, 40, 40, 0.1);
   color: #c62828;
   padding: 15px;
   margin-bottom: 20px;
-  border-radius: 4px;
+  border-radius: 2px;
   text-align: center;
+  border: 1px solid rgba(198, 40, 40, 0.2);
 }
 
 .no-products {
   grid-column: 1 / -1;
   text-align: center;
   padding: 40px;
-  font-size: 18px;
-  color: #777;
+  font-size: 16px;
+  color: #666;
 }
 
 /* Animation keyframes */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes modalFadeIn {
-  from { opacity: 0; transform: scale(0.8); }
+  from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .product-container {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    padding: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    padding: 0 15px 30px;
     gap: 20px;
   }
   
   .img-container {
-    height: 200px;
+    height: 180px;
   }
   
   .content h3 {
-    font-size: 16px;
+    font-size: 13px;
   }
   
   .price {
-    font-size: 18px;
+    font-size: 13px;
+  }
+  
+  .hero-content h1 {
+    font-size: 22px;
+  }
+  
+  .hero-content p {
+    font-size: 13px;
+  }
+  
+  .filter-options {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
   }
 }
