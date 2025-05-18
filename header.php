@@ -13,13 +13,14 @@ $foto_user = isset($_SESSION["foto_user"]) && !empty($_SESSION["foto_user"]) ? h
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Online</title>
+    <title>RELUX</title>
     
     <!-- Link to CSS file with cache-busting parameter -->
-    <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="about.css?v=<?php echo time(); ?>">
     
     <!-- Google Fonts - Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&
+    family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -31,7 +32,7 @@ $foto_user = isset($_SESSION["foto_user"]) && !empty($_SESSION["foto_user"]) ? h
             justify-content: space-between;
             align-items: center;
             padding: 15px 40px;
-            background-color: #ffffff;
+            background-color:rgb(255, 255, 255);
             border-bottom: 1px solid #eee;
         }
         
@@ -78,6 +79,19 @@ $foto_user = isset($_SESSION["foto_user"]) && !empty($_SESSION["foto_user"]) ? h
             font-weight: 500;
         }
         
+        .user-actions a:hover {
+            color: #000;
+        }
+
+        .logout-btn {
+            color: #dc3545 !important; /* Red color for logout */
+            transition: color 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            color: #c82333 !important; /* Darker red on hover */
+        }
+
         /* Category Navigation */
         .category-menu {
             display: flex;
@@ -116,15 +130,20 @@ $foto_user = isset($_SESSION["foto_user"]) && !empty($_SESSION["foto_user"]) ? h
         </div>
         
         <div class="logo-container">
-            <h1>ReLux</h1>
+            <a href="index.php" style="text-decoration: none;"><h1 style="font-family: 'Nunito', 
+            Arial, sans-serif; font-weight: bold; letter-spacing: 0.1em; color: black; text-decoration: none;">RELUX</h1></a>
         </div>
-        
+
         <div class="user-actions">
             <a href="setting.php">
                 <i class="fas fa-user"></i> Account
             </a>
             <a href="keranjang.php">
                 <i class="fas fa-shopping-bag"></i> Cart
+            </a>
+            </a>
+            <a href="logout.php" class="logout-btn">
+                <i class="fas fa-power-off"></i> Logout
             </a>
         </div>
     </div>

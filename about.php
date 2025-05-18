@@ -1,27 +1,13 @@
+<?php include 'header.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | Company Name</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="about.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <a href="index.php">Company Name</a>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="about.php" class="active">About</a></li>
-                    <li><a href="services.php">Services</a></li>
-                    <li><a href="contact.php">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
     <section class="hero">
         <div class="container">
@@ -35,7 +21,7 @@
             <div class="about-grid">
                 <div class="about-text">
                     <h2>Our Story</h2>
-                    <p>Founded in 2015, Company Name began with a simple mission: to provide exceptional products and services that make a difference in people's lives. What started as a small team with big dreams has grown into a thriving company with clients worldwide.</p>
+                    <p>Founded in 2025, Company Name began with a simple mission: to provide exceptional products and services that make a difference in people's lives. What started as a small team with big dreams has grown into a thriving company with clients worldwide.</p>
                     
                     <h2>Our Mission</h2>
                     <p>We're dedicated to delivering innovative solutions that address real-world challenges. Through creativity, integrity, and commitment to excellence, we strive to exceed expectations and create lasting value for our clients and communities.</p>
@@ -136,19 +122,10 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <h3>Company Name</h3>
-                    <p>Making a difference since 2015</p>
+                    <h3>Relux.co</h3>
+                    <p>Making a difference since 2025</p>
                 </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.php">Home</a></li>
-                        <li><a href="about.php">About</a></li>
-                        <li><a href="services.php">Services</a></li>
-                        <li><a href="contact.php">Contact</a></li>
-                        <li><a href="privacy.php">Privacy Policy</a></li>
-                    </ul>
-                </div>
+
                 <div class="footer-contact">
                     <h4>Contact Us</h4>
                     <p>123 Business Street<br>City, State 12345</p>
