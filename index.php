@@ -132,9 +132,10 @@ try {
     <!-- Metadata -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produk - Toko Online</title>
+    <title>ReLux - Luxury Bags Collection</title>
     <!-- CSS eksternal -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="bag_carousel.css">
     <!-- Font awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
@@ -142,65 +143,66 @@ try {
     <!-- Sertakan header -->
     <?php include 'header.php'; ?>
 
-	<!-- Sertakan navbar -->
-	<?php include 'navbar.php'; ?>
-
-    <!-- Modal using proper structure from CSS -->
+    <!-- Top navigation is integrated in header.php -->
+    
+    <!-- Success Modal -->
     <div id="myModal" class="modal">
         <div class="modal-content">
-            <p>Produk berhasil dimasukkan ke keranjang!</p>
-            <button class="btn" onclick="closeModal()">OK</button>
+            <p>Product successfully added to cart!</p>
+            <button class="btn" onclick="closeModal()">CONTINUE SHOPPING</button>
         </div>
     </div>
 
-	<!-- Kontainer produk -->
-	<div class="product-container">
-		<?php if ($error): ?>
-			<div class="message error"><?php echo htmlspecialchars($error); ?></div>
-		<?php endif; ?>
+    <!-- Product Showcase -->
+    <div class="product-container">
+        <?php if ($error): ?>
+            <div class="message error"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
 
-		<?php if (empty($products)): ?>
-			<p class="no-products">Tidak ada produk tersedia.</p>
-		<?php else: ?>
-			<?php 
+        <?php if (empty($products)): ?>
+            <p class="no-products">No products available at the moment.</p>
+        <?php else: ?>
+            <?php 
             $delay = 0;
             foreach ($products as $row): 
                 $delay++;
             ?>
-				<div class="card" style="--delay: <?php echo $delay; ?>">
+                <div class="card" style="--delay: <?php echo $delay; ?>">
                     <div class="img-container">
-					    <img src="images/<?php echo htmlspecialchars($row['gambar']); ?>" alt="<?php echo htmlspecialchars($row['nama_produk']); ?>">
+                        <img src="images/<?php echo htmlspecialchars($row['gambar']); ?>" alt="<?php echo htmlspecialchars($row['nama_produk']); ?>">
                     </div>
                     <div class="content">
-					    <h3><?php echo htmlspecialchars($row['nama_produk']); ?></h3>
-					    <p class="price">$ <?php echo number_format($row['harga'], 0, ',', '.'); ?></p>
+                        <h3><?php echo htmlspecialchars($row['nama_produk']); ?></h3>
+                        <p class="price">$ <?php echo number_format($row['harga'], 0, ',', '.'); ?></p>
                         <p class="desc">Produk berkualitas tinggi dan original</p>
-					    <a href="index.php?beli=<?php echo htmlspecialchars($row['idproduk']); ?>">
-                            <button class="btn">Beli Sekarang</button>
+                        <a href="index.php?beli=<?php echo htmlspecialchars($row['idproduk']); ?>">
+                            <button class="btn">ADD TO CART</button>
                         </a>
                     </div>
-				</div>
-			<?php endforeach; ?>
-		<?php endif; ?>
-	</div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
 
-	<script>
-		// Fungsi untuk menampilkan modal
-		function showModal() {
-			document.getElementById('myModal').style.display = 'block';
-		}
+    <!-- Scripts -->
+    <script src="bag_carousel.js"></script>
+    <script>
+        // Function to show modal
+        function showModal() {
+            document.getElementById('myModal').classList.add('show');
+        }
 
-		// Fungsi untuk menyembunyikan modal
-		function closeModal() {
-			document.getElementById('myModal').style.display = 'none';
-		}
+        // Function to hide modal
+        function closeModal() {
+            document.getElementById('myModal').classList.remove('show');
+        }
 
-		// Tampilkan modal jika data berhasil disimpan
-		window.onload = function(){
-			<?php if ($show_modal): ?>
-				showModal();
-			<?php endif; ?>
-		};
-	</script>
+        // Show modal if data was successfully saved
+        window.onload = function(){
+            <?php if ($show_modal): ?>
+                showModal();
+            <?php endif; ?>
+        };
+    </script>
 </body>
 </html>
