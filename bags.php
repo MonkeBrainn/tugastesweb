@@ -152,7 +152,7 @@ $totalBags = mysqli_num_rows($result);
     .bags-full-width {
         width: 100%;
         padding: 40px 0;
-        background-color: #fff;
+        background-color: #FAFAFA;
     }
     
     /* Page header styles */

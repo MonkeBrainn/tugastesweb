@@ -1,0 +1,373 @@
+/* 
+ * about.css - Styles for the About Us page
+ * Designed to match the luxury jewelry website aesthetic
+ */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
+
+:root {
+  --primary-color: #d4af37;
+  --secondary-color: #333;
+  --background-color: #FAFAFA;
+  --text-color: #333;
+  --heading-color: #000;
+  --accent-color: #f8f8f8;
+  --border-color: #eee;
+  --transition-speed: 0.3s;
+  --title-font: 'Playfair Display', serif;
+  --heading-font: 'Cormorant Garamond', serif;
+  --body-font: 'Montserrat', sans-serif;
+}
+
+body {
+  font-family: var(--body-font);
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Hero Section */
+.hero {
+  background-color: #fff;
+  padding: 80px 0 50px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.hero h1 {
+  font-family: var(--title-font);
+  color: var(--heading-color);
+  font-size: 32px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.hero p {
+  font-family: var(--body-font);
+  color: #666;
+  font-size: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.2px;
+}
+
+/* About Content Section */
+.about-content {
+  padding: 80px 0;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 80px;
+  align-items: center;
+}
+
+.about-text h2 {
+  font-family: var(--heading-font);
+  color: var(--heading-color);
+  font-size: 26px;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.about-text p {
+  font-family: var(--body-font);
+  margin-bottom: 35px;
+  font-size: 15px;
+  color: #555;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.about-text ul {
+  padding-left: 20px;
+  margin-bottom: 35px;
+}
+
+.about-text ul li {
+  font-family: var(--body-font);
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: #555;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.about-text ul li strong {
+  color: var(--heading-color);
+  font-weight: 500;
+}
+
+.about-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-image {
+  width: 100%;
+  height: 400px;
+  background-color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 18px;
+  border: 1px solid var(--border-color);
+}
+
+/* Team Section */
+.team-section {
+  margin-bottom: 80px;
+}
+
+.team-section h2 {
+  font-family: var(--heading-font);
+  color: var(--heading-color);
+  font-size: 26px;
+  margin-bottom: 40px;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 40px;
+}
+
+.team-member {
+  text-align: center;
+  background-color: #fff;
+  padding: 30px 20px;
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.team-member:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.member-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  margin: 0 auto 20px;
+}
+
+.team-member h3 {
+  font-family: var(--heading-font);
+  margin: 0;
+  font-size: 20px;
+  color: var(--heading-color);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.team-member .position {
+  font-family: var(--body-font);
+  font-size: 14px;
+  color: #666;
+  margin: 8px 0 20px;
+  font-style: italic;
+  letter-spacing: 0.3px;
+}
+
+.team-member p {
+  font-family: var(--body-font);
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* Testimonials Section */
+.testimonials {
+  background-color: var(--accent-color);
+  padding: 80px 0;
+  text-align: center;
+}
+
+.testimonials h2 {
+  font-family: var(--heading-font);
+  color: var(--heading-color);
+  font-size: 26px;
+  margin-bottom: 50px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 40px;
+}
+
+.testimonial {
+  background-color: #fff;
+  padding: 40px 30px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.testimonial blockquote {
+  font-family: var(--body-font);
+  margin: 0 0 25px 0;
+  font-size: 16px;
+  color: #555;
+  font-style: italic;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.testimonial .author {
+  font-family: var(--heading-font);
+  font-size: 15px;
+  color: var(--heading-color);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* Footer */
+footer {
+  background-color: #f8f8f8;
+  padding: 60px 0 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-logo h3 {
+  font-family: var(--title-font);
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  color: var(--heading-color);
+  font-weight: 500;
+}
+
+.footer-logo p {
+  font-family: var(--body-font);
+  font-size: 14px;
+  color: #666;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  font-family: var(--heading-font);
+  font-size: 16px;
+  color: var(--heading-color);
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links ul li {
+  margin-bottom: 8px;
+}
+
+.footer-links ul li a {
+  color: #555;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color var(--transition-speed) ease;
+}
+
+.footer-links ul li a:hover {
+  color: var(--secondary-color);
+}
+
+.footer-contact p {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 15px 0;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.footer-bottom p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .about-image {
+    order: -1;
+  }
+  
+  .placeholder-image {
+    height: 300px;
+  }
+  
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .team-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  
+  .hero h1 {
+    font-size: 24px;
+  }
+  
+  .hero p {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .placeholder-image {
+    height: 250px;
+  }
+}
