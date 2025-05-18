@@ -247,7 +247,7 @@ $totalItems = mysqli_num_rows($result);
     }
     
     .product-image {
-        height: 300px;
+        height: 250px;
         overflow: hidden;
         position: relative;
         cursor: pointer;
@@ -256,7 +256,7 @@ $totalItems = mysqli_num_rows($result);
     .product-image img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
         transition: transform 0.5s ease;
     }
     
@@ -269,6 +269,7 @@ $totalItems = mysqli_num_rows($result);
         flex-grow: 1;
         display: flex;
         flex-direction: column;
+        margin-bottom: 60px;
     }
     
     .product-info h3 {
