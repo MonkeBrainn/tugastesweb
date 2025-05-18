@@ -305,7 +305,12 @@ try {
                 <i class="fas fa-shopping-cart"></i> Checkout
             </button>
         <?php endif; ?>
+        <a href="riwayat_transaksi.php" class="btn btn-history">
+            <i class="fas fa-history"></i> Purchase History
+        </a>
     </div>
+
+
 
     <!-- Modal Checkout -->
     <div id="checkoutModal" class="checkout-modal">
