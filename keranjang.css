@@ -1,0 +1,538 @@
+/* Updated keranjang.css to remove navbar and add purchase history button */
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #fff;
+    color: #000;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Main Page Structure */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header & Bag Total Banner */
+.bag-total-banner {
+    text-align: center;
+    padding: 40px 0 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.bag-total-banner h1 {
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.free-delivery-text {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Cart Item Layout */
+.cart-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+/* Item Display */
+.item-container {
+    width: 70%;
+    padding-right: 40px;
+}
+
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 0;
+}
+
+.item-details-container {
+    display: flex;
+}
+
+.item-image-container {
+    width: 160px;
+    height: 160px;
+    margin-right: 30px;
+}
+
+.item-image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.item-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.item-id, .item-color, .item-qty {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.edit-link {
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1px solid #000;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.remove-link {
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.item-price {
+    font-size: 16px;
+    font-weight: normal;
+    text-align: right;
+}
+
+/* Order Summary Section */
+.order-summary {
+    width: 30%;
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+.summary-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.summary-label {
+    font-size: 16px;
+}
+
+.summary-value {
+    font-size: 16px;
+    text-align: right;
+}
+
+.shipping-row {
+    margin-bottom: 30px;
+}
+
+.shipping-label {
+    font-size: 16px;
+}
+
+.shipping-value {
+    font-size: 16px;
+    text-align: right;
+    color: #006400;
+}
+
+.summary-divider {
+    border-top: 1px solid #e5e5e5;
+    margin: 15px 0;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+.total-label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.total-value {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.checkout-button {
+    display: block;
+    width: 100%;
+    background-color: #002fff;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* Free Delivery Section */
+.free-delivery {
+    margin-top: 30px;
+}
+
+.delivery-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.delivery-text {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .cart-content {
+        flex-direction: column;
+    }
+    
+    .item-container {
+        width: 100%;
+        padding-right: 0;
+    }
+    
+    .order-summary {
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .item-row {
+        flex-direction: column;
+    }
+    
+    .item-price {
+        margin-top: 10px;
+        text-align: left;
+    }
+}
+
+/* Additional Classes to Match Image Exactly */
+.main-hr {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin: 0;
+}
+
+/* Utility Classes */
+.text-green {
+    color: #006400;
+}
+
+.currency {
+    font-weight: normal;
+}
+
+/* Modal and Form Styles */
+.checkout-modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.checkout-modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.checkout-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #002fff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Table styles for cart view in PHP */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.cart-table th,
+.cart-table td {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.cart-table th {
+    background-color: #f9f9f9;
+    text-align: left;
+}
+
+.cart-table img {
+    width: 80px;
+    height: auto;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.actions {
+    display: flex;
+    gap: 5px;
+}
+
+.action-btn {
+    background-color: transparent;
+    border: 1px solid #ddd;
+    padding: 5px 8px;
+    cursor: pointer;
+}
+
+.no-products td {
+    text-align: center;
+    padding: 20px;
+}
+
+.grand-total {
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.error {
+    background-color: #ffecec;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Navigation Area with Home Link & Purchase History Button */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.home-link {
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.history-button {
+    display: inline-block;
+    background-color: #f1f1f1;
+    color: #333;
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.history-button:hover {
+    background-color: #e5e5e5;
+}
+
+/* Purchase History Modal */
+.history-modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.history-modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.history-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table th,
+.history-table td {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    text-align: left;
+}
+
+.history-table th {
+    background-color: #f9f9f9;
+}
+
+.no-history {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+/* Logo Area */
+.logo-container {
+    text-align: center;
+    padding: 15px 0;
+}
+
+.logo-link {
+    color: #000;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* User Menu */
+.user-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.user-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.user-menu-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.user-menu-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.user-menu-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.user-menu:hover .user-menu-content {
+    display: block;
+}
