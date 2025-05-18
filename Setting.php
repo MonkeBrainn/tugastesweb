@@ -182,8 +182,6 @@ $message = "Error: " . htmlspecialchars($e->getMessage());
 <body>
 <!-- Sertakan header -->
 <?php include 'header.php'; ?>
-<!-- Sertakan navbar -->
-<?php include 'navbar.php'; ?>
 <!-- Kontainer pengaturan -->
 <div class="container settings-container">
 <h2>Pengaturan Profil</h2>

@@ -21,7 +21,7 @@
             <div class="about-grid">
                 <div class="about-text">
                     <h2>Our Story</h2>
-                    <p>Founded in 2025, Company Name began with a simple mission: to provide exceptional products and services that make a difference in people's lives. What started as a small team with big dreams has grown into a thriving company with clients worldwide.</p>
+                    <p>Founded in 2025, Relux.co began with a simple mission: to provide exceptional products and services that make a difference in people's lives. What started as a small team with big dreams has grown into a thriving company with clients worldwide.</p>
                     
                     <h2>Our Mission</h2>
                     <p>We're dedicated to delivering innovative solutions that address real-world challenges. Through creativity, integrity, and commitment to excellence, we strive to exceed expectations and create lasting value for our clients and communities.</p>
@@ -37,10 +37,8 @@
                 </div>
                 
                 <div class="about-image">
-                    <?php
-                    // You can replace this with an actual image
-                    echo '<div class="placeholder-image"><span>Company Image</span></div>';
-                    ?>
+                    <!-- Replace the placeholder with an actual image -->
+                    <img src="images/company-image.png" alt="Our Company" class="company-image">
                 </div>
             </div>
             
@@ -48,33 +46,38 @@
                 <h2>Meet Our Team</h2>
                 <div class="team-grid">
                     <?php
-                    // Team members could be loaded from a database
+                    // Team members with image filenames
                     $team_members = [
                         [
                             'name' => 'Jane Doe',
                             'position' => 'CEO & Founder',
-                            'bio' => 'With over 15 years of industry experience, Jane leads our company vision and strategy.'
+                            'bio' => 'With over 15 years of industry experience, Jane leads our company vision and strategy.',
+                            'image' => 'images/jane-doe.png'
                         ],
                         [
                             'name' => 'John Smith',
                             'position' => 'Technical Director',
-                            'bio' => 'John oversees all technical operations and innovations, bringing 10+ years of expertise.'
+                            'bio' => 'John oversees all technical operations and innovations, bringing 10+ years of expertise.',
+                            'image' => 'images/john-smith.png'
                         ],
                         [
                             'name' => 'Emily Chen',
                             'position' => 'Creative Lead',
-                            'bio' => 'Emily brings creativity and fresh perspectives to every project we undertake.'
+                            'bio' => 'Emily brings creativity and fresh perspectives to every project we undertake.',
+                            'image' => 'images/emily-chen.png'
                         ],
                         [
                             'name' => 'Michael Johnson',
                             'position' => 'Client Relations',
-                            'bio' => 'Michael ensures our clients receive exceptional service and support throughout their journey with us.'
+                            'bio' => 'Michael ensures our clients receive exceptional service and support throughout their journey with us.',
+                            'image' => 'images/michael-johnson.png'
                         ]
                     ];
                     
                     foreach($team_members as $member) {
                         echo '<div class="team-member">';
-                        echo '<div class="member-photo"></div>';
+                        // Replace the empty div with an actual image
+                        echo '<img src="' . htmlspecialchars($member['image']) . '" alt="' . htmlspecialchars($member['name']) . '" class="member-photo">';
                         echo '<h3>' . htmlspecialchars($member['name']) . '</h3>';
                         echo '<p class="position">' . htmlspecialchars($member['position']) . '</p>';
                         echo '<p>' . htmlspecialchars($member['bio']) . '</p>';

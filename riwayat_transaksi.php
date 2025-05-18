@@ -224,6 +224,30 @@ try {
             }
         }
     </style>
+    <style>
+    /* Existing CSS remains... */
+    
+    /* Add these styles for the print button */
+    .print-section {
+        text-align: right;
+        margin-top: 20px;
+    }
+    
+    .print-btn {
+        background-color:rgb(17, 17, 18);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s;
+    }
+    
+    .print-btn:hover {
+        background-color:rgb(0, 0, 0);
+    }
+</style>
+
 </head>
 <body>
     <!-- Sertakan header -->
@@ -317,6 +341,11 @@ try {
                     <!-- Grand total -->
                     <div class="grand-total">
                         Grand Total: $ <?php echo number_format($grand_total, 0, ',', '.'); ?>
+                    </div>
+                    <div class="print-section">
+                        <a href="print_transaksi.php?idtransaksi=<?php echo htmlspecialchars($selected_transaction['idtransaksi']); ?>" class="btn print-btn" target="_blank">
+                            <i class="fas fa-print"></i> Print Transaksi
+                        </a>
                     </div>
                 </div>
             <?php endif; ?>

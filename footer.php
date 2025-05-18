@@ -1,17 +1,4 @@
 </div> <!-- Close main-content div -->
-
-    <!-- Newsletter Section -->
-    <section class="newsletter-section">
-        <div class="newsletter-container">
-            <h2>Berlangganan Newsletter</h2>
-            <p>Dapatkan informasi terbaru tentang produk dan promosi spesial!</p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Email Anda" required>
-                <button type="submit">Subscribe</button>
-            </form>
-        </div>
-    </section>
-
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -25,25 +12,8 @@
             </div>
             
             <div class="footer-section">
-                <h3>Kategori</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Elektronik</a></li>
-                    <li><a href="#">Fashion</a></li>
-                    <li><a href="#">Kesehatan</a></li>
-                    <li><a href="#">Rumah Tangga</a></li>
-                </ul>
             </div>
-            
-            <div class="footer-section">
-                <h3>Informasi</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Cara Pembelian</a></li>
-                    <li><a href="#">Pengiriman</a></li>
-                    <li><a href="#">Kebijakan Privasi</a></li>
-                    <li><a href="#">Syarat dan Ketentuan</a></li>
-                </ul>
-            </div>
-            
+
             <div class="footer-section">
                 <h3>Kontak</h3>
                 <p>Email: info@tokoonline.com</p>
@@ -53,7 +23,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; 2025 Toko Online. All Rights Reserved.</p>
+            <p>&copy; 2025 ReLux. All Rights Reserved.</p>
         </div>
     </footer>
 

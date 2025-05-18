@@ -299,18 +299,35 @@ try {
             Grand Total: $ <?php echo number_format($grand_total, 0, ',', '.'); ?>
         </div>
 
-        <!-- Tombol Checkout -->
-        <?php if (!empty($cart_items)): ?>
-            <button class="btn" onclick="document.getElementById('checkoutModal').style.display='block'">
-                <i class="fas fa-shopping-cart"></i> Checkout
-            </button>
-        <?php endif; ?>
-        <a href="riwayat_transaksi.php" class="btn btn-history">
-            <i class="fas fa-history"></i> Purchase History
-        </a>
-    </div>
+<!-- Tombol Checkout dan Purchase History -->
+        <div class="action-buttons" style="display: flex; gap: 10px; margin-top: 20px;">
+            <?php if (!empty($cart_items)): ?>
+                <button class="btn" onclick="document.getElementById('checkoutModal').style.display='block'">
+                    <i class="fas fa-shopping-cart"></i> Checkout
+                </button>
+            <?php endif; ?>
+            <a href="riwayat_transaksi.php" class="btn-history">
+                <i class="fas fa-history"></i> Purchase History
+            </a>
+        </div>
 
-
+    <style>
+        .btn-history {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .btn-history:hover {
+            background-color: #45a049;
+        }
+    </style>
 
     <!-- Modal Checkout -->
     <div id="checkoutModal" class="checkout-modal">

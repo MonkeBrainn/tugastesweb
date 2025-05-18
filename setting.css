@@ -1,0 +1,185 @@
+/* setting.css - Custom CSS for setting.php in Loro Piana style */
+
+/* Global Variables */
+:root {
+    --loro-beige: #f5f5f0;
+    --loro-light-beige: #faf9f6;
+    --loro-dark-beige: #e0dfd8;
+    --loro-brown: #5a4b3b;
+    --loro-dark-brown: #3c3028;
+    --loro-light-gray: #e9e9e6;
+    --loro-text: #333333;
+    --loro-light-text: #666666;
+    --loro-accent: #b89a81;
+    --loro-error: #8c2e2e;
+    --loro-success: #3c633a;
+    --loro-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Serif', 'Times New Roman', Times, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--loro-text);
+    background-color: #ffffff;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Settings Container */
+.settings-container {
+    max-width: 800px;
+    padding: 40px 20px;
+}
+
+h2 {
+    font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+    font-weight: 400;
+    font-size: 32px;
+    color: var(--loro-dark-brown);
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    position: relative;
+}
+
+h2:after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    background-color: var(--loro-accent);
+    margin: 15px auto 0;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--loro-light-text);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 15px;
+    border: 1px solid var(--loro-dark-beige);
+    background-color: var(--loro-light-beige);
+    color: var(--loro-text);
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: var(--loro-accent);
+    box-shadow: 0 0 0 1px var(--loro-accent);
+}
+
+input[type="file"] {
+    margin: 10px 0;
+    padding: 8px 0;
+}
+
+.profile-photo {
+    display: block;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: 15px;
+    border: 2px solid var(--loro-light-gray);
+    box-shadow: 0 2px 8px var(--loro-shadow);
+}
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    min-width: 180px;
+    background-color: var(--loro-brown);
+    color: white;
+    border: none;
+    padding: 14px 25px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: var(--loro-dark-brown);
+}
+
+/* Message Styles */
+.message {
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 2px;
+    font-size: 14px;
+}
+
+.message.success {
+    background-color: rgba(60, 99, 58, 0.1);
+    color: var(--loro-success);
+    border-left: 3px solid var(--loro-success);
+}
+
+.message.error {
+    background-color: rgba(140, 46, 46, 0.1);
+    color: var(--loro-error);
+    border-left: 3px solid var(--loro-error);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .settings-container {
+        padding: 30px 15px;
+    }
+    
+    h2 {
+        font-size: 28px;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Additional styling for file input to better match Loro Piana aesthetic */
+input[type="file"]::file-selector-button {
+    border: 1px solid var(--loro-dark-beige);
+    padding: 8px 12px;
+    background-color: var(--loro-light-beige);
+    color: var(--loro-text);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: inherit;
+    margin-right: 15px;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: var(--loro-dark-beige);
+}
