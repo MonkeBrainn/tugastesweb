@@ -132,11 +132,10 @@ if (isset($_GET['beli'])) {
 
 // Query to get data for men's collection (example)
 $men_query = "SELECT * FROM produk WHERE 
-              LOWER(nama_produk) LIKE '%men%' OR 
-              LOWER(kategori) LIKE '%men%' 
+              LOWER(nama_produk) LIKE '%men%'
               LIMIT 1";
 $men_result = mysqli_query($koneksi, $men_query);
-$men_image = "mens_collection.jpg"; // Default image
+$men_image = "bags_collection.png"; // Default image
 if (mysqli_num_rows($men_result) > 0) {
     $men_row = mysqli_fetch_assoc($men_result);
     if (!empty($men_row['gambar'])) {
@@ -146,11 +145,10 @@ if (mysqli_num_rows($men_result) > 0) {
 
 // Query to get data for women's collection (example)
 $women_query = "SELECT * FROM produk WHERE 
-                LOWER(nama_produk) LIKE '%women%' OR 
-                LOWER(kategori) LIKE '%women%' 
+                LOWER(nama_produk) LIKE '%women%'
                 LIMIT 1";
 $women_result = mysqli_query($koneksi, $women_query);
-$women_image = "womens_collection.jpg"; // Default image
+$women_image = "scarves_collection.png"; // Default image
 if (mysqli_num_rows($women_result) > 0) {
     $women_row = mysqli_fetch_assoc($women_result);
     if (!empty($women_row['gambar'])) {
@@ -502,14 +500,14 @@ if (mysqli_num_rows($women_result) > 0) {
         <div class="category-item">
             <img src="images/<?php echo htmlspecialchars($men_image); ?>" alt="Men's Collection" class="category-image">
             <div class="category-overlay">
-                <h3 class="category-title">Men's Collection</h3>
+                <h3 class="category-title">Bags collection</h3>
                 <a href="mens.php" class="shop-link">Shop Now</a>
             </div>
         </div>
         <div class="category-item">
             <img src="images/<?php echo htmlspecialchars($women_image); ?>" alt="Women's Collection" class="category-image">
             <div class="category-overlay">
-                <h3 class="category-title">Women's Collection</h3>
+                <h3 class="category-title">Scarves Collection</h3>
                 <a href="womens.php" class="shop-link">Shop Now</a>
             </div>
         </div>
