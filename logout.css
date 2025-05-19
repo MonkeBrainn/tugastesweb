@@ -1,0 +1,143 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Headers */
+h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 24px;
+}
+
+/* Form Elements */
+form {
+    width: 100%;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input[type="file"] {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Buttons */
+.btn, button[type="submit"] {
+    background-color: #5b4636;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.btn:hover, button[type="submit"]:hover {
+    background-color: #7c5e48;
+}
+
+/* Links */
+.link {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.link a {
+    color: #5b4636;
+    text-decoration: none;
+}
+
+.link a:hover {
+    text-decoration: underline;
+}
+
+/* Errors */
+.error-message {
+    background-color: #ffeeee;
+    color: #cc0000;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ffcccc;
+}
+
+/* Specific Containers */
+.logout-container {
+    max-width: 500px;
+    text-align: center;
+}
+
+.logout-container p {
+    margin-bottom: 20px;
+}
+
+/* Form Fields Group */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Logo */
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    max-width: 150px;
+    height: auto;
+}
+
+/* Profile Image */
+.profile-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-image img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #5b4636;
+}

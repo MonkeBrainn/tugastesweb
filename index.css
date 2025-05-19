@@ -184,6 +184,9 @@ body {
   text-transform: none;
   letter-spacing: 0;
   font-size: 12px;
+  display: block;
+  height: 32px;
+  line-height: 16px;
 }
 
 .btn:hover {
@@ -192,13 +195,18 @@ body {
 
 /* Add to Cart button styling */
 .add-to-cart {
-  background-color: #000;
-  color: #fff;
+  background-color: #000 !important;
+  color: #fff !important;
   font-size: 12px;
   padding: 8px 0;
   width: 100%;
   text-transform: uppercase;
   letter-spacing: 1px;
+  height: 32px;
+  line-height: 16px;
+  border: none;
+  border-radius: 0;
+  margin-top: auto;
 }
 
 /* Modal styling */

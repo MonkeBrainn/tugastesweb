@@ -199,8 +199,8 @@ if (isset($_GET['beli'])) {
                         <h3><?php echo htmlspecialchars($row['nama_produk']); ?></h3>
                         <p class="price"><?php echo $formatted_price; ?></p>
                         <p class="desc">Premium quality authentic luxury item</p>
-                        <a href="index.php?beli=<?php echo htmlspecialchars($row['idproduk']); ?>">
-                            <button class="btn">ADD TO CART</button>
+                         <a href="index.php?beli=<?php echo htmlspecialchars($row['idproduk']); ?>">
+                            <button class="btn add-to-cart">ADD TO CART</button>
                         </a>
                     </div>
                 </div>

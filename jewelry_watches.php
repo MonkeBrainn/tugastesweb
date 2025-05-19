@@ -238,7 +238,6 @@ $totalItems = mysqli_num_rows($result);
         flex-direction: column;
         background-color: #fff;
         position: relative;
-        padding-bottom: 60px;
     }
     
     .product-card:hover {
