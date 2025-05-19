@@ -130,29 +130,29 @@ if (isset($_GET['beli'])) {
     }
 }
 
-// Query to get data for men's collection (example)
-$men_query = "SELECT * FROM produk WHERE 
-              LOWER(nama_produk) LIKE '%men%'
+// For Bags Collection - using one of your bag product IDs
+$bags_query = "SELECT * FROM produk WHERE 
+              idproduk = 'p202504002' 
               LIMIT 1";
-$men_result = mysqli_query($koneksi, $men_query);
-$men_image = "bags_collection.png"; // Default image
-if (mysqli_num_rows($men_result) > 0) {
-    $men_row = mysqli_fetch_assoc($men_result);
-    if (!empty($men_row['gambar'])) {
-        $men_image = $men_row['gambar'];
+$bags_result = mysqli_query($koneksi, $bags_query);
+$bags_image = "bags_collection.png"; // Default image if query fails
+if (mysqli_num_rows($bags_result) > 0) {
+    $bags_row = mysqli_fetch_assoc($bags_result);
+    if (!empty($bags_row['gambar'])) {
+        $bags_image = $bags_row['gambar'];
     }
 }
 
-// Query to get data for women's collection (example)
-$women_query = "SELECT * FROM produk WHERE 
-                LOWER(nama_produk) LIKE '%women%'
+// For Scarves Collection - using one of your scarves product IDs
+$scarves_query = "SELECT * FROM produk WHERE 
+                idproduk = 'p202504022' 
                 LIMIT 1";
-$women_result = mysqli_query($koneksi, $women_query);
-$women_image = "scarves_collection.png"; // Default image
-if (mysqli_num_rows($women_result) > 0) {
-    $women_row = mysqli_fetch_assoc($women_result);
-    if (!empty($women_row['gambar'])) {
-        $women_image = $women_row['gambar'];
+$scarves_result = mysqli_query($koneksi, $scarves_query);
+$scarves_image = "scarves_collection.png"; // Default image if query fails
+if (mysqli_num_rows($scarves_result) > 0) {
+    $scarves_row = mysqli_fetch_assoc($scarves_result);
+    if (!empty($scarves_row['gambar'])) {
+        $scarves_image = $scarves_row['gambar'];
     }
 }
 ?>
@@ -485,11 +485,11 @@ if (mysqli_num_rows($women_result) > 0) {
     <!-- Video Hero Section -->
     <section class="video-hero">
         <video autoplay muted loop playsinline>
-            <source src="videos/luxury_fashion.mp4" type="video/mp4">
+            <source src="images/luxury_fashion.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <div class="hero-overlay">
-            <h1>ReLux Spring Collection 2025</h1>
+            <h1>ReLux Spring Opening 2025</h1>
             <a href="#featured" class="hero-cta">Discover Now</a>
         </div>
     </section>
@@ -498,14 +498,14 @@ if (mysqli_num_rows($women_result) > 0) {
     <h2 class="section-title">Our Collections</h2>
     <div class="collection-categories">
         <div class="category-item">
-            <img src="images/<?php echo htmlspecialchars($men_image); ?>" alt="Men's Collection" class="category-image">
+            <img src="images/<?php echo htmlspecialchars($bags_image); ?>" alt="Bags Collection" class="category-image">
             <div class="category-overlay">
                 <h3 class="category-title">Bags collection</h3>
                 <a href="mens.php" class="shop-link">Shop Now</a>
             </div>
         </div>
         <div class="category-item">
-            <img src="images/<?php echo htmlspecialchars($women_image); ?>" alt="Women's Collection" class="category-image">
+            <img src="images/<?php echo htmlspecialchars($scarves_image); ?>" alt="Scarves Collection" class="category-image">
             <div class="category-overlay">
                 <h3 class="category-title">Scarves Collection</h3>
                 <a href="womens.php" class="shop-link">Shop Now</a>
